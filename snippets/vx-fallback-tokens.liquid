@@ -1,0 +1,102 @@
+{% comment %}
+  Safety net for the Velnoxy look.
+  Rendered in layout/theme.liquid BEFORE Dawn's own {% style %} block, so whenever the
+  theme settings exist (fonts + color schemes from Theme settings), they override these
+  values. If the settings are missing (e.g. settings_data.json was not accepted on upload),
+  the store still renders in DM Sans with the Velnoxy color schemes instead of browser
+  defaults (Times + white).
+{% endcomment %}
+{%- if settings.type_body_font.family == blank or settings.type_header_font.family == blank -%}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap"
+    rel="stylesheet"
+  >
+{%- endif -%}
+<style>
+  :root,
+  .color-scheme-1 {
+    --color-background: 255,255,255;
+    --gradient-background: #FFFFFF;
+    --color-foreground: 26,29,28;
+    --color-background-contrast: 191,191,191;
+    --color-shadow: 6,46,41;
+    --color-button: 45,212,191;
+    --color-button-text: 6,46,41;
+    --color-secondary-button: 255,255,255;
+    --color-secondary-button-text: 6,46,41;
+    --color-link: 6,46,41;
+    --color-badge-foreground: 26,29,28;
+    --color-badge-background: 255,255,255;
+    --color-badge-border: 26,29,28;
+  }
+  .color-scheme-2 {
+    --color-background: 246,248,247;
+    --gradient-background: #F6F8F7;
+    --color-foreground: 26,29,28;
+    --color-background-contrast: 176,189,183;
+    --color-shadow: 6,46,41;
+    --color-button: 45,212,191;
+    --color-button-text: 6,46,41;
+    --color-secondary-button: 246,248,247;
+    --color-secondary-button-text: 6,46,41;
+    --color-link: 6,46,41;
+    --color-badge-foreground: 26,29,28;
+    --color-badge-background: 246,248,247;
+    --color-badge-border: 26,29,28;
+  }
+  .color-scheme-3 {
+    --color-background: 230,248,245;
+    --gradient-background: #E6F8F5;
+    --color-foreground: 26,29,28;
+    --color-background-contrast: 144,226,212;
+    --color-shadow: 6,46,41;
+    --color-button: 45,212,191;
+    --color-button-text: 6,46,41;
+    --color-secondary-button: 230,248,245;
+    --color-secondary-button-text: 6,46,41;
+    --color-link: 6,46,41;
+    --color-badge-foreground: 26,29,28;
+    --color-badge-background: 230,248,245;
+    --color-badge-border: 26,29,28;
+  }
+  .color-scheme-4 {
+    --color-background: 45,212,191;
+    --gradient-background: #2DD4BF;
+    --color-foreground: 6,46,41;
+    --color-background-contrast: 23,121,108;
+    --color-shadow: 6,46,41;
+    --color-button: 6,46,41;
+    --color-button-text: 255,255,255;
+    --color-secondary-button: 45,212,191;
+    --color-secondary-button-text: 6,46,41;
+    --color-link: 6,46,41;
+    --color-badge-foreground: 6,46,41;
+    --color-badge-background: 45,212,191;
+    --color-badge-border: 6,46,41;
+  }
+  .color-scheme-5 {
+    --color-background: 6,46,41;
+    --gradient-background: #062E29;
+    --color-foreground: 255,255,255;
+    --color-background-contrast: 23,170,151;
+    --color-shadow: 0,0,0;
+    --color-button: 45,212,191;
+    --color-button-text: 6,46,41;
+    --color-secondary-button: 6,46,41;
+    --color-secondary-button-text: 255,255,255;
+    --color-link: 255,255,255;
+    --color-badge-foreground: 255,255,255;
+    --color-badge-background: 6,46,41;
+    --color-badge-border: 255,255,255;
+  }
+  .color-scheme-1,
+  .color-scheme-2,
+  .color-scheme-3,
+  .color-scheme-4,
+  .color-scheme-5 {
+    color: rgba(var(--color-foreground), 0.75);
+    background-color: rgb(var(--color-background));
+  }
+</style>
