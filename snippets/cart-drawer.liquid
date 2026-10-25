@@ -99,13 +99,7 @@
                   {{- 'icon-close.svg' | inline_asset_content -}}
                 </span>
               </button>
-              {%- liquid
-                assign continue_url = routes.all_products_collection_url
-                if settings.vx_cart_empty_product != blank
-                  assign continue_url = settings.vx_cart_empty_product.url
-                endif
-              -%}
-              <a href="{{ continue_url }}" class="button">
+              <a href="{{ routes.all_products_collection_url }}" class="button">
                 {{ 'general.continue_shopping' | t }}
               </a>
             </div>

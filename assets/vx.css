@@ -3,6 +3,18 @@
    Tokens follow the v3 design (DM Sans, white, teal #2DD4BF).
    ========================================================================== */
 
+/* Typeface: DM Sans is loaded by snippets/vx-fallback-tokens.liquid and forced here (after Dawn's
+   own :root block), so the look does not depend on a font handle stored in settings_data.json. */
+:root {
+  --font-body-family: 'DM Sans', sans-serif;
+  --font-body-style: normal;
+  --font-body-weight: 400;
+  --font-body-weight-bold: 700;
+  --font-heading-family: 'DM Sans', sans-serif;
+  --font-heading-style: normal;
+  --font-heading-weight: 700;
+}
+
 :root {
   --vx-teal: #2dd4bf;
   --vx-teal-rgb: 45, 212, 191;

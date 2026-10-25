@@ -1472,12 +1472,6 @@
         "default": true
       },
       {
-        "type": "product",
-        "id": "vx_cart_empty_product",
-        "label": "\"Continue shopping\" goes to",
-        "info": "Empty = all products collection."
-      },
-      {
         "type": "header",
         "content": "Reservation timer"
       },
