@@ -1,0 +1,174 @@
+<section
+  id="{% if section.settings.anchor != blank %}{{ section.settings.anchor | handleize }}{% else %}vx-{{ section.id }}{% endif %}"
+  class="vx-section vx-section--policies color-{{ section.settings.color_scheme }} gradient"
+  style="--vx-pt: {{ section.settings.padding_top }}px; --vx-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="vx-wrap">
+    <vx-tabs class="vx-policies">
+      <nav class="vx-policies__nav" role="tablist" aria-label="{{ section.settings.nav_label }}">
+        <span class="vx-eyebrow">{{ section.settings.nav_label }}</span>
+        {%- assign list = 'refund,shipping,privacy,terms' | split: ',' -%}
+        {%- for key in list -%}
+          {%- liquid
+            case key
+              when 'refund'
+                assign pol = shop.refund_policy
+              when 'shipping'
+                assign pol = shop.shipping_policy
+              when 'privacy'
+                assign pol = shop.privacy_policy
+              when 'terms'
+                assign pol = shop.terms_of_service
+            endcase
+          -%}
+          {%- if pol.body != blank -%}
+            <button type="button" role="tab" data-vx-tab="{{ key }}" aria-selected="false">{{ pol.title }}</button>
+          {%- endif -%}
+        {%- endfor -%}
+      </nav>
+      <div class="vx-policies__body">
+        {%- for key in list -%}
+          {%- liquid
+            case key
+              when 'refund'
+                assign pol = shop.refund_policy
+                assign summary = section.settings.refund_summary
+              when 'shipping'
+                assign pol = shop.shipping_policy
+                assign summary = section.settings.shipping_summary
+              when 'privacy'
+                assign pol = shop.privacy_policy
+                assign summary = ''
+              when 'terms'
+                assign pol = shop.terms_of_service
+                assign summary = ''
+            endcase
+          -%}
+          {%- if pol.body != blank -%}
+            <article class="vx-policies__panel" role="tabpanel" data-vx-panel="{{ key }}" hidden>
+              <h1 class="vx-h2">{{ pol.title }}</h1>
+              {%- if summary != blank -%}
+                <div class="vx-policies__summary">
+                  <p class="vx-eyebrow">{{ section.settings.summary_label }}</p>
+                  <ul class="list-unstyled">
+                    {%- assign items = summary | newline_to_br | split: '<br />' -%}
+                    {%- for it in items -%}{%- assign t = it | strip -%}{%- if t != blank -%}
+                      <li><span class="vx-tick is-yes">{% render 'vx-icon', icon: 'check', icon_size: 16 %}</span>{{ t }}</li>
+                    {%- endif -%}{%- endfor -%}
+                  </ul>
+                </div>
+              {%- endif -%}
+              <div class="rte vx-policies__text">{{ pol.body }}</div>
+              <div class="vx-help-box">
+                <div><strong>{{ section.settings.help_title }}</strong><span>{{ section.settings.help_text }}</span></div>
+                <a href="{{ section.settings.help_link | default: '/pages/contact' }}" class="button">{{ section.settings.help_button }}</a>
+              </div>
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </vx-tabs>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VX · Policies (tabs)",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Texts come from Settings → Policies in Shopify admin. Link to a tab with /pages/policies#refund, #shipping, #privacy or #terms."
+    },
+    {
+      "type": "text",
+      "id": "nav_label",
+      "label": "Navigation label",
+      "default": "POLICIES"
+    },
+    {
+      "type": "text",
+      "id": "summary_label",
+      "label": "Summary label",
+      "default": "THE SHORT VERSION"
+    },
+    {
+      "type": "textarea",
+      "id": "refund_summary",
+      "label": "Refund: short version (one per line)",
+      "default": "Try Velnoxy for up to 30 days after delivery\nDon't love it? Email us and we'll guide you through the return\nRefund goes back to your original payment method"
+    },
+    {
+      "type": "textarea",
+      "id": "shipping_summary",
+      "label": "Shipping: short version (one per line)",
+      "default": "Free shipping on every order\nOrders ship within 24 hours\nTracking link by email as soon as it ships"
+    },
+    {
+      "type": "text",
+      "id": "help_title",
+      "label": "Help box title",
+      "default": "Questions about this policy?"
+    },
+    {
+      "type": "text",
+      "id": "help_text",
+      "label": "Help box text",
+      "default": "support@velnoxy.com"
+    },
+    {
+      "type": "text",
+      "id": "help_button",
+      "label": "Help button",
+      "default": "Contact us"
+    },
+    {
+      "type": "url",
+      "id": "help_link",
+      "label": "Help link"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Anchor id (for #links)",
+      "info": "e.g. reviews → link with #reviews"
+    }
+  ],
+  "presets": [
+    {
+      "name": "VX · Policies (tabs)"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,194 @@
+<section
+  id="{% if section.settings.anchor != blank %}{{ section.settings.anchor | handleize }}{% else %}vx-{{ section.id }}{% endif %}"
+  class="vx-section vx-section--ugc color-{{ section.settings.color_scheme }} gradient"
+  style="--vx-pt: {{ section.settings.padding_top }}px; --vx-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="vx-wrap">
+    <div class="vx-ugc__head">
+      {% render 'vx-heading', s: section.settings %}
+      {%- if section.settings.show_badge -%}
+        <div class="vx-rating-badge">
+          <span class="vx-rating-badge__value">{{ section.settings.rating }}</span>
+          <span><span class="vx-stars" aria-hidden="true">★★★★★</span><small>{{ section.settings.count }}</small></span>
+        </div>
+      {%- endif -%}
+    </div>
+    <div class="vx-grid vx-grid--3 vx-ugc__grid">
+      {%- for block in section.blocks -%}
+        <figure class="vx-ugc__card" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400, 600, 800', sizes: '(min-width: 990px) 33vw, 100vw', class: 'vx-ugc__img' }}
+          {%- else -%}
+            <div class="vx-ugc__img vx-media--empty">{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+          {%- endif -%}
+          <figcaption>
+            <span class="vx-stars" aria-hidden="true">★★★★★</span>
+            <blockquote>{{ block.settings.quote }}</blockquote>
+            <cite>{{ block.settings.name }}</cite>
+          </figcaption>
+        </figure>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VX · Real routines (UGC)",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic words are shown in teal.",
+      "default": "Real women. Real routines. <em>No \"perfect lighting.\"</em>"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro text",
+      "default": "<p>You've seen the before/afters with different light, different poses, different everything. We'd rather show you real women using it at home.</p>"
+    },
+    {
+      "type": "select",
+      "id": "heading_align",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badge",
+      "label": "Show rating badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "rating",
+      "label": "Rating",
+      "default": "4.8"
+    },
+    {
+      "type": "text",
+      "id": "count",
+      "label": "Review count text",
+      "default": "2,417 reviews"
+    },
+    {
+      "type": "paragraph",
+      "content": "Use real, verified reviews only, with the customer's permission. No before/after photos."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-3"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Anchor id (for #links)",
+      "info": "e.g. reviews → link with #reviews",
+      "default": "reviews"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo (customer using it at home)"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "Real review in her words."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name / context",
+          "default": "[Name], [age] · ✓ Verified buyer"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "VX · Real routines (UGC)",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "quote": "Real review: the routine she actually keeps.",
+            "name": "[Name], 34 · lifts 4×/week · ✓ Verified"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "quote": "Real review: legs feel lighter after work.",
+            "name": "[Name], 41 · desk job · ✓ Verified"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "quote": "Real review: finally not another cream.",
+            "name": "[Name], 48 · tried everything · ✓ Verified"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,200 @@
+<section
+  id="{% if section.settings.anchor != blank %}{{ section.settings.anchor | handleize }}{% else %}vx-{{ section.id }}{% endif %}"
+  class="vx-section vx-section--steps color-{{ section.settings.color_scheme }} gradient"
+  style="--vx-pt: {{ section.settings.padding_top }}px; --vx-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="vx-wrap">
+    {% render 'vx-heading', s: section.settings %}
+    <ol class="vx-grid vx-grid--3 vx-steps vx-steps--{{ section.settings.style }} list-unstyled">
+      {%- for block in section.blocks -%}
+        <li class="vx-step" {{ block.shopify_attributes }}>
+          {%- if section.settings.style == 'image' -%}
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '400, 600, 900', sizes: '(min-width: 990px) 33vw, 100vw', class: 'vx-step__img' }}
+            {%- else -%}
+              <div class="vx-step__img vx-media--empty">{{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+            {%- endif -%}
+          {%- endif -%}
+          <div class="vx-step__text">
+            {%- if section.settings.style == 'image' -%}
+              <span class="vx-step__n">{{ section.settings.step_label }} {{ forloop.index }}</span>
+            {%- else -%}
+              <span class="vx-num">{{ forloop.index }}</span>
+            {%- endif -%}
+            <h3 class="vx-card__title">{{ block.settings.title }}</h3>
+            <div class="vx-card__body rte">{{ block.settings.text }}</div>
+          </div>
+        </li>
+      {%- endfor -%}
+    </ol>
+    {%- if section.settings.footnote != blank -%}
+      <div class="vx-footnote rte">{{ section.settings.footnote }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VX · How to use",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic words are shown in teal.",
+      "default": "10 minutes. On the couch. While your show plays."
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro text",
+      "default": "<p>You don't need more willpower. You need a routine that's easier to do than to skip.</p>"
+    },
+    {
+      "type": "select",
+      "id": "heading_align",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Style",
+      "options": [
+        {
+          "value": "image",
+          "label": "Cards with photos"
+        },
+        {
+          "value": "compact",
+          "label": "Compact numbers"
+        }
+      ],
+      "default": "image"
+    },
+    {
+      "type": "text",
+      "id": "step_label",
+      "label": "Step label",
+      "default": "STEP"
+    },
+    {
+      "type": "richtext",
+      "id": "footnote",
+      "label": "Footnote",
+      "default": "<p><strong>No appointment. No drive. No mess.</strong> That's why women actually keep doing it.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Anchor id (for #links)",
+      "info": "e.g. reviews → link with #reviews"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Step title"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Step text.</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "VX · How to use",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "Add a little oil",
+            "text": "<p>A few drops on your thighs so the nodes glide smoothly.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Pick your speed",
+            "text": "<p>Start low. Turn it up only when it feels good.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Glide for 10 minutes",
+            "text": "<p>Slow upward strokes on thighs, glutes, belly or arms. That's it.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

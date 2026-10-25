@@ -1,0 +1,168 @@
+<section
+  id="{% if section.settings.anchor != blank %}{{ section.settings.anchor | handleize }}{% else %}vx-{{ section.id }}{% endif %}"
+  class="vx-section vx-section--featured-product color-{{ section.settings.color_scheme }} gradient"
+  style="--vx-pt: {{ section.settings.padding_top }}px; --vx-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="vx-wrap">
+    {%- assign fp = section.settings.product -%}
+    <div class="vx-split">
+      <div class="vx-split__media">
+        {%- assign img = section.settings.image | default: fp.featured_image -%}
+        {%- if img != blank -%}
+          {{ img | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '500, 800, 1100', sizes: '(min-width: 990px) 50vw, 100vw', class: 'vx-media vx-media--square vx-media--contain' }}
+        {%- else -%}
+          <div class="vx-media vx-media--square vx-media--empty">{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+        {%- endif -%}
+      </div>
+      <div class="vx-split__text">
+        {%- if section.settings.badge != blank -%}<span class="vx-badge">{{ section.settings.badge }}</span>{%- endif -%}
+        <h2 class="vx-h2 vx-h2--sm">{{ section.settings.heading | default: fp.title }}</h2>
+        {%- if fp != blank -%}
+          <p class="vx-price-line">
+            <span>{% if fp.price_varies %}{{ section.settings.from_label }} {% endif %}{{ fp.price_min | money }}</span>
+            {%- if fp.compare_at_price_min > fp.price_min -%}<s>{{ fp.compare_at_price_min | money }}</s>{%- endif -%}
+          </p>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}<div class="vx-body rte">{{ section.settings.text }}</div>{%- endif -%}
+        <ul class="list-unstyled vx-checklist">
+          {%- assign items = section.settings.bullets | newline_to_br | split: '<br />' -%}
+          {%- for it in items -%}{%- assign t = it | strip -%}{%- if t != blank -%}
+            <li><span class="vx-tick is-yes">{% render 'vx-icon', icon: 'check', icon_size: 16 %}</span>{{ t }}</li>
+          {%- endif -%}{%- endfor -%}
+        </ul>
+        {%- if fp != blank and section.settings.show_chips -%}
+          {%- assign chip_lines = section.settings.chip_labels | newline_to_br | split: '<br />' -%}
+          <ul class="list-unstyled vx-chips">
+            {%- for v in fp.variants -%}
+              {%- assign chip_label = v.title -%}
+              {%- for line in chip_lines -%}
+                {%- assign pair = line | split: ':' -%}
+                {%- assign k = pair[0] | strip -%}
+                {%- if k == v.title -%}{%- assign chip_label = pair | slice: 1, 9 | join: ':' | strip -%}{%- endif -%}
+              {%- endfor -%}
+              <li{% if forloop.index == section.settings.highlight_chip %} class="is-on"{% endif %}><a href="{{ v.url }}">{{ chip_label }} · {{ v.price | money }}</a></li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+        <a href="{{ fp.url | default: '#' }}" class="button vx-btn-wide">{{ section.settings.button_label }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VX · Featured product",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image override"
+    },
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Badge",
+      "default": "OUR ONE PRODUCT"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading (empty = product title)"
+    },
+    {
+      "type": "text",
+      "id": "from_label",
+      "label": "\"From\" label",
+      "default": "from"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>We make one thing. So we made it properly. It rotates on its own, so you don't have to roll it back and forth. You just guide it.</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "bullets",
+      "label": "Bullets (one per line)",
+      "default": "21 rotating nodes that press, lift and release\nCordless, so you can use it anywhere at home\nFeels like a deep massage. Gentle speeds to start."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_chips",
+      "label": "Show variant chips",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "chip_labels",
+      "label": "Chip labels by variant title",
+      "default": "1: Device Only\n2: Essential Kit\n3: Full Ritual"
+    },
+    {
+      "type": "range",
+      "id": "highlight_chip",
+      "label": "Highlight chip #",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Choose your ritual"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Anchor id (for #links)",
+      "info": "e.g. reviews → link with #reviews"
+    }
+  ],
+  "presets": [
+    {
+      "name": "VX · Featured product"
+    }
+  ]
+}
+{% endschema %}

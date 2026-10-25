@@ -1,0 +1,744 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "rating": {
+          "type": "vx_rating",
+          "settings": {
+            "use_metafields": true,
+            "rating": "4.8",
+            "count": "2,417",
+            "label": "reviews",
+            "link": "#reviews"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "benefits": {
+          "type": "vx_benefits",
+          "settings": {
+            "lead": "<p><strong>Creams sit on top of your skin. Velnoxy moves what's underneath.</strong> 21 rotating nodes knead your thighs for you. 10 minutes on the couch.</p>",
+            "benefit_1": "<b>Smoother-looking skin</b> — kneads the layer creams can't reach",
+            "benefit_2": "<b>Lighter-feeling legs</b> — gets things moving after long hours of sitting",
+            "benefit_3": "<b>Zero effort</b> — it rotates on its own, you just guide it"
+          }
+        },
+        "divider": {
+          "type": "vx_divider",
+          "settings": {
+            "text": "CHOOSE YOUR RITUAL"
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "none"
+          },
+          "disabled": true
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": false
+          }
+        },
+        "trust": {
+          "type": "vx_trust_row",
+          "settings": {
+            "icon_1": "shield",
+            "text_1": "30-day money-back",
+            "icon_2": "shipping",
+            "text_2": "Free US shipping",
+            "icon_3": "lock",
+            "text_3": "Secure checkout"
+          }
+        },
+        "delivery": {
+          "type": "vx_delivery",
+          "settings": {
+            "text": "Get it between [start] and [end].",
+            "min_days": 5,
+            "max_days": 10,
+            "business_days": true,
+            "cutoff_hour": 14
+          }
+        },
+        "review": {
+          "type": "vx_review",
+          "settings": {
+            "quote": "Real review in her words, ideally about the routine or wearing shorts again.",
+            "name": "[Name], [age]",
+            "verified": true,
+            "verified_label": "Verified buyer"
+          }
+        }
+      },
+      "block_order": [
+        "rating",
+        "title",
+        "price",
+        "benefits",
+        "divider",
+        "variant_picker",
+        "buy_buttons",
+        "trust",
+        "delivery",
+        "review"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_position": "left",
+        "gallery_layout": "thumbnail_slider",
+        "media_size": "medium",
+        "constrain_to_viewport": false,
+        "media_fit": "cover",
+        "image_zoom": "lightbox",
+        "mobile_thumbnails": "show",
+        "hide_variants": false,
+        "enable_video_looping": true,
+        "padding_top": 28,
+        "padding_bottom": 56,
+        "vx_sticky_atc": true,
+        "vx_sticky_label": "Add to cart"
+      }
+    },
+    "pain": {
+      "type": "vx-pain",
+      "settings": {
+        "heading": "You check every outfit for one thing first: <em>will it show my legs?</em>",
+        "lines": "Black leggings in July.\nThe cute dress that still has the tags on.\nAlways standing at the back of the group photo.",
+        "strong_line": "You're not vain. You're not lazy. And this isn't your fault.",
+        "text": "<p>There's a reason nothing you've tried has worked. And it has nothing to do with how hard you tried.</p>",
+        "image_side": "right",
+        "color_scheme": "scheme-2",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "tried": {
+      "type": "vx-card-grid",
+      "settings": {
+        "heading": "You've already tried the \"fixes.\"",
+        "intro": "<p>You eat well. You move. You've spent real money. Here's how that usually goes:</p>",
+        "heading_align": "left",
+        "card_style": "cross",
+        "columns": "3",
+        "color_scheme": "scheme-1",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "icon": "check",
+            "title": "Cellulite creams",
+            "text": "<p>Used the whole jar. Rubbed it in every night. Nothing changed.</p>"
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "icon": "check",
+            "title": "Coffee scrubs",
+            "text": "<p>Smooth for 20 minutes. Coffee grounds in the drain forever.</p>"
+          }
+        },
+        "card_3": {
+          "type": "card",
+          "settings": {
+            "icon": "check",
+            "title": "Dry brushing",
+            "text": "<p>Every morning for months. Red skin, sore wrist, same dimples.</p>"
+          }
+        },
+        "card_4": {
+          "type": "card",
+          "settings": {
+            "icon": "check",
+            "title": "Cupping",
+            "text": "<p>Bruises for two weeks. You swore never again.</p>"
+          }
+        },
+        "card_5": {
+          "type": "card",
+          "settings": {
+            "icon": "check",
+            "title": "More squats. More cardio.",
+            "text": "<p>Your legs got stronger. Your skin didn't get the memo.</p>"
+          }
+        },
+        "card_6": {
+          "type": "card",
+          "settings": {
+            "icon": "check",
+            "title": "Spa lymphatic massage",
+            "text": "<p>$80–120 a session. Feels amazing. Then you sit at your desk for 9 hours again.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3",
+        "card_4",
+        "card_5",
+        "card_6"
+      ]
+    },
+    "cause": {
+      "type": "vx-card-grid",
+      "settings": {
+        "heading": "Cellulite was never a fat problem.",
+        "intro": "<p>Thin women get it. Women who lift 5 days a week get it. For a lot of women it even looks <em>worse</em> after they lose weight. That's because it's about the tissue under your skin, and how well things move through it.</p>",
+        "heading_align": "left",
+        "card_style": "number",
+        "columns": "3",
+        "color_scheme": "scheme-3",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "eyebrow": "HERE'S WHAT NOBODY TOLD YOU",
+        "callout_text": "<p><strong>So creams were never going to fix it.</strong> They stay on the surface. And most cellulite creams are sold as cosmetics, which only have to prove they're safe, not that they work.</p>",
+        "callout_highlight": "You didn't fail. You were handed tools that can't reach the problem."
+      },
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "icon": "check",
+            "title": "Your lymph has no pump.",
+            "text": "<p>Blood has your heart. The fluid between your cells only moves when your muscles move.</p>"
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "icon": "check",
+            "title": "Your chair hits pause.",
+            "text": "<p>8–10 hours of sitting presses on your thighs and slows everything down. Like a garden hose with someone standing on it.</p>"
+          }
+        },
+        "card_3": {
+          "type": "card",
+          "settings": {
+            "icon": "check",
+            "title": "Still tissue gets tight and puffy.",
+            "text": "<p>Fluid sits. Tissue tightens. The dimpling shows more.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3"
+      ]
+    },
+    "mechanism": {
+      "type": "vx-mechanism",
+      "settings": {
+        "eyebrow": "WHAT ACTUALLY MAKES SENSE",
+        "heading": "To change what you see on top, you have to move what's underneath.",
+        "intro": "<p>Press. Lift. Release. Over and over. That's what a lymphatic massage therapist's hands do. It's also why one session costs $80–120.</p>",
+        "heading_align": "left",
+        "color_scheme": "scheme-1",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "method_1": {
+          "type": "method",
+          "settings": {
+            "label": "CREAMS",
+            "good": false,
+            "motion": "flat",
+            "title": "Sit on the surface",
+            "text": "<p>Nice to rub in. Nothing underneath moves.</p>"
+          }
+        },
+        "method_2": {
+          "type": "method",
+          "settings": {
+            "label": "VIBRATING TOOLS",
+            "good": false,
+            "motion": "zigzag",
+            "title": "Shake one spot",
+            "text": "<p>They buzz on top of the skin. They don't press, lift and release.</p>"
+          }
+        },
+        "method_3": {
+          "type": "method",
+          "settings": {
+            "label": "ROTATION",
+            "good": true,
+            "motion": "knead",
+            "title": "Knead and move",
+            "text": "<p>Nodes roll in a steady circle (press, lift, release) the way a therapist's hands do.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "method_1",
+        "method_2",
+        "method_3"
+      ]
+    },
+    "reveal": {
+      "type": "vx-product-reveal",
+      "settings": {
+        "heading": "Meet Velnoxy. <em>The therapist's kneading motion, in your hands.</em>",
+        "intro": "<p>Every part of it was built so you'd actually use it. Every night. Without thinking about it.</p>",
+        "heading_align": "left",
+        "color_scheme": "scheme-2",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "big": "21",
+            "title": "Rotating nodes",
+            "text": "<p>More contact per pass. A deep, kneading massage instead of a buzz.</p>"
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "big": "Auto",
+            "title": "Rotates on its own",
+            "text": "<p>No rolling back and forth. You just guide it slowly.</p>"
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "big": "1–3",
+            "title": "Speeds you control",
+            "text": "<p>Gentle on sensitive spots, deeper on stubborn ones. [confirm number of speeds]</p>"
+          }
+        },
+        "feature_4": {
+          "type": "feature",
+          "settings": {
+            "big": "U",
+            "title": "Grip that reaches",
+            "text": "<p>Thighs, glutes, belly, arms. On your own, no help needed.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3",
+        "feature_4"
+      ]
+    },
+    "steps": {
+      "type": "vx-steps",
+      "settings": {
+        "heading": "10 minutes. On the couch. While your show plays.",
+        "intro": "<p>You don't need more willpower. You need a routine that's easier to do than to skip.</p>",
+        "heading_align": "left",
+        "style": "image",
+        "step_label": "STEP",
+        "footnote": "<p><strong>No appointment. No drive. No mess.</strong> That's why women actually keep doing it.</p>",
+        "color_scheme": "scheme-1",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Add a little oil",
+            "text": "<p>A few drops on your thighs so the nodes glide smoothly.</p>"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Pick your speed",
+            "text": "<p>Start low. Turn it up only when it feels good.</p>"
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "Glide for 10 minutes",
+            "text": "<p>Slow upward strokes on thighs, glutes, belly or arms. That's it.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ]
+    },
+    "ugc": {
+      "type": "vx-ugc",
+      "settings": {
+        "heading": "Real women. Real routines. <em>No \"perfect lighting.\"</em>",
+        "intro": "<p>You've seen the before/afters with different light, different poses, different everything. We'd rather show you real women using it at home.</p>",
+        "heading_align": "left",
+        "show_badge": true,
+        "rating": "4.8",
+        "count": "2,417 reviews",
+        "color_scheme": "scheme-3",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "anchor": "real-routines"
+      },
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "quote": "Real review: the routine she actually keeps.",
+            "name": "[Name], 34 · lifts 4×/week · ✓ Verified"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "quote": "Real review: legs feel lighter after work.",
+            "name": "[Name], 41 · desk job · ✓ Verified"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "quote": "Real review: finally not another cream.",
+            "name": "[Name], 48 · tried everything · ✓ Verified"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3"
+      ]
+    },
+    "comparison": {
+      "type": "vx-comparison",
+      "settings": {
+        "heading": "Why women switch to Velnoxy",
+        "heading_align": "center",
+        "feature_label": "Feature",
+        "col_a": "Velnoxy",
+        "col_b": "Cellulite creams",
+        "col_c": "Spa massage",
+        "color_scheme": "scheme-1",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "feature": "Works under the surface",
+            "a": "yes",
+            "b": "no",
+            "c": "yes"
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "feature": "Use at home, any time",
+            "a": "yes",
+            "b": "yes",
+            "c": "no"
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "feature": "No appointment or drive",
+            "a": "yes",
+            "b": "yes",
+            "c": "no"
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "feature": "No mess",
+            "a": "yes",
+            "b": "no",
+            "c": "yes"
+          }
+        },
+        "row_5": {
+          "type": "row",
+          "settings": {
+            "feature": "Feels like a massage",
+            "a": "yes",
+            "b": "no",
+            "c": "yes"
+          }
+        },
+        "row_6": {
+          "type": "row",
+          "settings": {
+            "feature": "What you pay",
+            "a": "$84.90 once",
+            "b": "A new jar every month",
+            "c": "$80–120 every session"
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5",
+        "row_6"
+      ]
+    },
+    "honest": {
+      "type": "vx-honest",
+      "settings": {
+        "heading": "Let's be honest for a second.",
+        "intro": "<p>Velnoxy isn't magic. It won't change your skin overnight. And it does nothing in a drawer. It works when it becomes your 10 minutes, most nights, for weeks. If you can give it that, it's built for you.</p>",
+        "heading_align": "left",
+        "yes_title": "Velnoxy is for you if…",
+        "yes_list": "You've tried creams, scrubs or brushing and got nothing\nYou sit a lot and your legs feel heavy by evening\nYou can give it 10 minutes most nights\nYou want something that feels good, not painful",
+        "no_title": "Skip it if…",
+        "no_list": "You want a change by next weekend\nYou won't use it more than once a week\nYou want a medical treatment",
+        "color_scheme": "scheme-2",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "timeline": {
+      "type": "vx-timeline",
+      "settings": {
+        "heading": "What your first 30 days can feel like",
+        "heading_align": "center",
+        "disclaimer": "Everyone's skin is different. Results vary with consistency.",
+        "color_scheme": "scheme-1",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "moment_1": {
+          "type": "moment",
+          "settings": {
+            "when": "DAY 1",
+            "title": "It feels like a spa night.",
+            "text": "<p>Warm, tingly legs. That \"just had a massage\" feeling.</p>"
+          }
+        },
+        "moment_2": {
+          "type": "moment",
+          "settings": {
+            "when": "WEEK 1",
+            "title": "It's part of your evening.",
+            "text": "<p>10 minutes during your show. Legs feel lighter after long sitting days.</p>"
+          }
+        },
+        "moment_3": {
+          "type": "moment",
+          "settings": {
+            "when": "WEEKS 2–4",
+            "title": "Your skin feels different.",
+            "text": "<p>Smoother under your fingers. You start looking on purpose.</p>"
+          }
+        },
+        "moment_4": {
+          "type": "moment",
+          "settings": {
+            "when": "DAY 30+",
+            "title": "No more outfit math.",
+            "text": "<p>You pick what you want to wear. Not what hides.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "moment_1",
+        "moment_2",
+        "moment_3",
+        "moment_4"
+      ]
+    },
+    "offer": {
+      "type": "vx-offer",
+      "settings": {
+        "heading": "Start your ritual tonight",
+        "intro": "<p>Most women start with the Essential Kit. The oil helps the nodes glide.</p>",
+        "heading_align": "center",
+        "guarantee_days": "30",
+        "guarantee_title": "Use it every night for 30 days.",
+        "guarantee_text": "<p>If you don't love how it feels, send it back for a full refund. You're not risking $84.90. You're risking 10 minutes a night.</p>",
+        "color_scheme": "scheme-3",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "anchor": "offer"
+      },
+      "blocks": {
+        "tier_1": {
+          "type": "tier",
+          "settings": {
+            "variant_position": 1,
+            "name": "Device Only",
+            "highlight": false,
+            "includes": "Velnoxy™ Massager\nFree US shipping",
+            "button_label": "Choose Device Only"
+          }
+        },
+        "tier_2": {
+          "type": "tier",
+          "settings": {
+            "variant_position": 2,
+            "name": "The Essential Kit",
+            "highlight": true,
+            "includes": "Velnoxy™ Massager\nFREE Premium Massage Oil\nFree US shipping",
+            "button_label": "Choose The Essential Kit",
+            "badge": "MOST POPULAR"
+          }
+        },
+        "tier_3": {
+          "type": "tier",
+          "settings": {
+            "variant_position": 3,
+            "name": "The Full Ritual",
+            "highlight": false,
+            "includes": "Velnoxy™ Massager\nFREE Premium Massage Oil\nFREE Activation Lymphatic Brush\nFREE 14-Day Body Ritual Guide\nFree US shipping",
+            "button_label": "Choose The Full Ritual",
+            "badge": "BEST VALUE"
+          }
+        }
+      },
+      "block_order": [
+        "tier_1",
+        "tier_2",
+        "tier_3"
+      ]
+    },
+    "faq": {
+      "type": "vx-faq",
+      "settings": {
+        "heading": "Still have questions? Good.",
+        "intro": "<p>You've been burned by big promises before. Here are straight answers.</p>",
+        "heading_align": "center",
+        "open_first": true,
+        "color_scheme": "scheme-1",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "anchor": "faq"
+      },
+      "blocks": {
+        "qa_1": {
+          "type": "qa",
+          "settings": {
+            "question": "Does it hurt?",
+            "answer": "<p>No. It feels like a deep massage, not a workout. Start on the lowest speed and only go up when it feels good. If anything hurts, ease off.</p>"
+          }
+        },
+        "qa_2": {
+          "type": "qa",
+          "settings": {
+            "question": "I'm thin / I lift / I'm in menopause. Will it still work for me?",
+            "answer": "<p>Cellulite shows up at every size and every age, because it's about the tissue under your skin, not your weight. Velnoxy works that tissue directly, so it fits your body as it is right now.</p>"
+          }
+        },
+        "qa_3": {
+          "type": "qa",
+          "settings": {
+            "question": "How soon will I notice something?",
+            "answer": "<p>Most women feel warm, lighter-feeling legs after the very first session. Changes in how your skin looks take steady use over several weeks. Everyone is different.</p>"
+          }
+        },
+        "qa_4": {
+          "type": "qa",
+          "settings": {
+            "question": "I always quit routines. Why would this be different?",
+            "answer": "<p>Because it doesn't ask for willpower. It's cordless, it rotates on its own, and you use it on the couch for 10 minutes. You were already sitting there anyway.</p>"
+          }
+        },
+        "qa_5": {
+          "type": "qa",
+          "settings": {
+            "question": "Does it stall when I press harder?",
+            "answer": "<p>[Confirm with supplier: motor torque under pressure.] Let the rollers do the work. A light, steady glide is all you need.</p>"
+          }
+        },
+        "qa_6": {
+          "type": "qa",
+          "settings": {
+            "question": "Do I need the massage oil?",
+            "answer": "<p>You can use any body oil. The Premium Massage Oil in the Essential Kit helps the nodes glide smoothly, so every session feels comfortable.</p>"
+          }
+        },
+        "qa_7": {
+          "type": "qa",
+          "settings": {
+            "question": "What if it's not for me?",
+            "answer": "<p>You have 30 days. Use it every night. If you don't love it, contact support@velnoxy.com for a full refund.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "qa_1",
+        "qa_2",
+        "qa_3",
+        "qa_4",
+        "qa_5",
+        "qa_6",
+        "qa_7"
+      ]
+    },
+    "cta": {
+      "type": "vx-cta-band",
+      "settings": {
+        "heading": "Imagine it's July. You open the closet. And you don't do the math.",
+        "text": "<p>No checking the mirror from the side. No \"maybe the long one.\" Just the outfit you actually want. It starts with 10 minutes tonight.</p>",
+        "button_label": "Start My 10-Minute Ritual",
+        "small": "30-day money-back guarantee · Free US shipping",
+        "color_scheme": "scheme-4",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "button_link": "#offer"
+      }
+    },
+    "reviews": {
+      "type": "vx-reviews",
+      "settings": {
+        "heading": "Every review, unfiltered",
+        "heading_align": "center",
+        "color_scheme": "scheme-1",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "anchor": "reviews"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "pain",
+    "tried",
+    "cause",
+    "mechanism",
+    "reveal",
+    "steps",
+    "ugc",
+    "comparison",
+    "honest",
+    "timeline",
+    "offer",
+    "faq",
+    "cta",
+    "reviews"
+  ]
+}

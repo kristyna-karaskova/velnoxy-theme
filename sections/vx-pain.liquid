@@ -1,0 +1,143 @@
+<section
+  id="{% if section.settings.anchor != blank %}{{ section.settings.anchor | handleize }}{% else %}vx-{{ section.id }}{% endif %}"
+  class="vx-section vx-section--pain color-{{ section.settings.color_scheme }} gradient"
+  style="--vx-pt: {{ section.settings.padding_top }}px; --vx-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="vx-wrap">
+    <div class="vx-split vx-split--{{ section.settings.image_side }}">
+      <div class="vx-split__text">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="vx-h2">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.lines != blank -%}
+          <div class="vx-lines">
+            {%- assign lines = section.settings.lines | newline_to_br | split: '<br />' -%}
+            {%- for line in lines -%}
+              {%- assign l = line | strip -%}
+              {%- if l != blank -%}<p>{{ l }}</p>{%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+        {%- if section.settings.strong_line != blank -%}
+          <p class="vx-strong-line">{{ section.settings.strong_line }}</p>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <div class="vx-body rte">{{ section.settings.text }}</div>
+        {%- endif -%}
+      </div>
+      <div class="vx-split__media">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 1200
+            | image_tag:
+              loading: 'lazy',
+              widths: '400, 600, 800, 1000, 1200',
+              sizes: '(min-width: 990px) 50vw, 100vw',
+              class: 'vx-media vx-media--portrait'
+          }}
+        {%- else -%}
+          <div class="vx-media vx-media--portrait vx-media--empty">{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VX · Pain / hook",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic words are shown in teal.",
+      "default": "You check every outfit for one thing first: <em>will it show my legs?</em>"
+    },
+    {
+      "type": "textarea",
+      "id": "lines",
+      "label": "Short lines (one per line)",
+      "default": "Black leggings in July.\nThe cute dress that still has the tags on.\nAlways standing at the back of the group photo."
+    },
+    {
+      "type": "text",
+      "id": "strong_line",
+      "label": "Bold line",
+      "default": "You're not vain. You're not lazy. And this isn't your fault."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>There's a reason nothing you've tried has worked. And it has nothing to do with how hard you tried.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "No before/after, no body close-ups (Meta Health & Wellness)."
+    },
+    {
+      "type": "select",
+      "id": "image_side",
+      "label": "Image position",
+      "options": [
+        {
+          "value": "right",
+          "label": "Right"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Anchor id (for #links)",
+      "info": "e.g. reviews → link with #reviews"
+    }
+  ],
+  "presets": [
+    {
+      "name": "VX · Pain / hook"
+    }
+  ]
+}
+{% endschema %}

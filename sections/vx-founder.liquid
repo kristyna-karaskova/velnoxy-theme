@@ -1,0 +1,99 @@
+<section
+  id="{% if section.settings.anchor != blank %}{{ section.settings.anchor | handleize }}{% else %}vx-{{ section.id }}{% endif %}"
+  class="vx-section vx-section--founder color-{{ section.settings.color_scheme }} gradient"
+  style="--vx-pt: {{ section.settings.padding_top }}px; --vx-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="vx-wrap vx-wrap--narrow">
+    <div class="vx-founder">
+      {%- if section.settings.heading != blank -%}<h2 class="vx-h2">{{ section.settings.heading }}</h2>{%- endif -%}
+      <div class="vx-founder__text rte">{{ section.settings.text }}</div>
+      <div class="vx-founder__who">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 160 | image_tag: width: 56, height: 56, loading: 'lazy', class: 'vx-founder__img', alt: section.settings.name }}
+        {%- endif -%}
+        <span><strong>{{ section.settings.name }}</strong><small>{{ section.settings.role }}</small></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VX · Founder note",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why I built Velnoxy"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "info": "Make sure every sentence is 100% true.",
+      "default": "<p>Okay, the honest version. I didn't start Velnoxy because I found some miracle.</p><p>I started it because I was so tired of products that promise everything. Creams. Scrubs. \"Clinically proven\" stuff with no study anywhere. And then they just… didn't.</p><p>So I went looking for the thing that actually made sense. Not something that sits on your skin. Something that moves what's under it.</p><p>No filters. No fake before/afters. Just a tool that does the kneading for you, 10 minutes a night.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Photo"
+    },
+    {
+      "type": "text",
+      "id": "name",
+      "label": "Name",
+      "default": "Kristýna"
+    },
+    {
+      "type": "text",
+      "id": "role",
+      "label": "Role",
+      "default": "Founder of Velnoxy"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Anchor id (for #links)",
+      "info": "e.g. reviews → link with #reviews"
+    }
+  ],
+  "presets": [
+    {
+      "name": "VX · Founder note"
+    }
+  ]
+}
+{% endschema %}

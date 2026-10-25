@@ -1,0 +1,205 @@
+{
+  "sections": {
+    "main": {
+      "type": "vx-faq-page",
+      "settings": {
+        "heading": "Questions? Good. <em>Here are straight answers.</em>",
+        "intro": "<p>You've heard big promises before. So here's what Velnoxy does, what it doesn't, and how everything works.</p>",
+        "search_placeholder": "Search, e.g. \"battery\" or \"returns\"",
+        "nav_label": "FAQ categories",
+        "empty_text": "No matching questions. Try another word or contact us.",
+        "help_title": "Still stuck?",
+        "help_text": "Write to us. A real person answers Mon–Fri, 9AM–6PM EST.",
+        "help_button": "Contact us",
+        "hero_scheme": "scheme-3",
+        "color_scheme": "scheme-1"
+      },
+      "blocks": {
+        "category_1": {
+          "type": "category",
+          "settings": {
+            "title": "Using Velnoxy"
+          }
+        },
+        "qa_2": {
+          "type": "qa",
+          "settings": {
+            "question": "How do I use it?",
+            "answer": "<p>Put a few drops of oil on your skin. Turn it on and pick a speed. Glide it slowly upward over thighs, glutes, belly or arms for about 10 minutes. The rollers turn on their own, so you only guide it. [confirm against the user manual]</p>"
+          }
+        },
+        "qa_3": {
+          "type": "qa",
+          "settings": {
+            "question": "How often should I use it?",
+            "answer": "<p>Most women use it most nights, about 10 minutes per session. It works best as a habit, not a once-a-week thing. [confirm recommended frequency in manual]</p>"
+          }
+        },
+        "qa_4": {
+          "type": "qa",
+          "settings": {
+            "question": "Does it hurt?",
+            "answer": "<p>No. It feels like a deep massage. Start on the lowest speed and only go up when it feels good. On sensitive spots, use less pressure. Pain is not a sign it's working: if anything hurts, stop.</p>"
+          }
+        },
+        "qa_5": {
+          "type": "qa",
+          "settings": {
+            "question": "Do I need massage oil?",
+            "answer": "<p>Oil helps the nodes glide smoothly so it stays comfortable. Any body oil works. The Essential Kit includes our Premium Massage Oil.</p>"
+          }
+        },
+        "qa_6": {
+          "type": "qa",
+          "settings": {
+            "question": "Can I use it after a workout?",
+            "answer": "<p>Yes. Lots of women use it on sore legs after the gym. It feels like a recovery massage.</p>"
+          }
+        },
+        "category_7": {
+          "type": "category",
+          "settings": {
+            "title": "Results"
+          }
+        },
+        "qa_8": {
+          "type": "qa",
+          "settings": {
+            "question": "How soon will I notice something?",
+            "answer": "<p>Most women feel warm, lighter-feeling legs after the first session. Changes in how skin looks take steady use over several weeks. Everyone's body is different, and results vary.</p>"
+          }
+        },
+        "qa_9": {
+          "type": "qa",
+          "settings": {
+            "question": "I'm thin / I lift / I'm in menopause. Will it work for me?",
+            "answer": "<p>Cellulite shows up at every size and every age, because it's about the tissue under your skin, not your weight. Velnoxy works that tissue directly, so it fits your body as it is right now.</p>"
+          }
+        },
+        "qa_10": {
+          "type": "qa",
+          "settings": {
+            "question": "Is this a medical treatment?",
+            "answer": "<p>No. Velnoxy is a cosmetic massage device for at-home use. It isn't meant to treat any medical condition. If you're pregnant, have a skin condition, varicose veins or a health concern, ask your doctor first. [align with safety notes in manual]</p>"
+          }
+        },
+        "category_11": {
+          "type": "category",
+          "settings": {
+            "title": "The device"
+          }
+        },
+        "qa_12": {
+          "type": "qa",
+          "settings": {
+            "question": "How many speeds does it have?",
+            "answer": "<p>Velnoxy has multiple speeds, from gentle to deep. [add exact number of speeds]</p>"
+          }
+        },
+        "qa_13": {
+          "type": "qa",
+          "settings": {
+            "question": "How long does the battery last?",
+            "answer": "<p>It's cordless and rechargeable. [add battery life, charge time, cable type]</p>"
+          }
+        },
+        "qa_14": {
+          "type": "qa",
+          "settings": {
+            "question": "Does the motor stall if I press harder?",
+            "answer": "<p>Let the rollers do the work. A light, steady glide is all you need. [confirm torque under pressure with supplier]</p>"
+          }
+        },
+        "qa_15": {
+          "type": "qa",
+          "settings": {
+            "question": "Can I use it in the shower?",
+            "answer": "<p>Please keep it dry unless the manual says it's water-resistant. [confirm water rating]</p>"
+          }
+        },
+        "category_16": {
+          "type": "category",
+          "settings": {
+            "title": "Shipping & orders"
+          }
+        },
+        "qa_17": {
+          "type": "qa",
+          "settings": {
+            "question": "Where do you ship?",
+            "answer": "<p>We ship to the US with free shipping. [list all shipping countries]</p>"
+          }
+        },
+        "qa_18": {
+          "type": "qa",
+          "settings": {
+            "question": "How long does delivery take?",
+            "answer": "<p>Orders ship within 24 hours. You'll get a tracking link by email as soon as it's on its way. [add delivery estimate in business days]</p>"
+          }
+        },
+        "qa_19": {
+          "type": "qa",
+          "settings": {
+            "question": "How do I track my order?",
+            "answer": "<p>Use the tracking link in your shipping email, or go to Track Your Order and enter your order number and email.</p>"
+          }
+        },
+        "category_20": {
+          "type": "category",
+          "settings": {
+            "title": "Returns & guarantee"
+          }
+        },
+        "qa_21": {
+          "type": "qa",
+          "settings": {
+            "question": "How does the 30-day guarantee work?",
+            "answer": "<p>Use it for up to 30 days. If you don't love it, email support@velnoxy.com with your order number. We'll send return steps and refund you once it's back. [match exact Refund Policy terms]</p>"
+          }
+        },
+        "qa_22": {
+          "type": "qa",
+          "settings": {
+            "question": "Who pays for return shipping?",
+            "answer": "<p>See our Refund Policy for return shipping details. [decide: free return label or customer pays]</p>"
+          }
+        },
+        "qa_23": {
+          "type": "qa",
+          "settings": {
+            "question": "My device arrived damaged. What now?",
+            "answer": "<p>Sorry about that. Email us a photo and your order number within 48 hours of delivery and we'll make it right. [confirm damage process]</p>"
+          }
+        }
+      },
+      "block_order": [
+        "category_1",
+        "qa_2",
+        "qa_3",
+        "qa_4",
+        "qa_5",
+        "qa_6",
+        "category_7",
+        "qa_8",
+        "qa_9",
+        "qa_10",
+        "category_11",
+        "qa_12",
+        "qa_13",
+        "qa_14",
+        "qa_15",
+        "category_16",
+        "qa_17",
+        "qa_18",
+        "qa_19",
+        "category_20",
+        "qa_21",
+        "qa_22",
+        "qa_23"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

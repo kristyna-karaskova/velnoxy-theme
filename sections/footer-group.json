@@ -1,0 +1,47 @@
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "vx-footer",
+      "settings": {
+        "tagline": "Your daily ritual for smoother-looking, confident skin.",
+        "show_payment": true,
+        "disclaimer": "<p>Velnoxy is a cosmetic massage device for at-home use. It is not a medical device and is not intended to diagnose, treat, cure or prevent any disease. Results vary.</p>",
+        "show_powered_by": false,
+        "color_scheme": "scheme-4"
+      },
+      "blocks": {
+        "support": {
+          "type": "menu",
+          "settings": {
+            "title": "Support",
+            "menu": "footer"
+          }
+        },
+        "legal": {
+          "type": "menu",
+          "settings": {
+            "title": "Legal",
+            "menu": "legal"
+          }
+        },
+        "contact": {
+          "type": "text",
+          "settings": {
+            "title": "Contact",
+            "text": "<p><a href=\"mailto:support@velnoxy.com\">support@velnoxy.com</a><br>Mon–Fri: 9AM–6PM EST</p>"
+          }
+        }
+      },
+      "block_order": [
+        "support",
+        "legal",
+        "contact"
+      ]
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

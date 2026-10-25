@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "main": {
+      "type": "vx-policies",
+      "settings": {
+        "nav_label": "POLICIES",
+        "summary_label": "THE SHORT VERSION",
+        "refund_summary": "Try Velnoxy for up to 30 days after delivery\nDon't love it? Email us and we'll guide you through the return\nRefund goes back to your original payment method",
+        "shipping_summary": "Free shipping on every order\nOrders ship within 24 hours\nTracking link by email as soon as it ships",
+        "help_title": "Questions about this policy?",
+        "help_text": "support@velnoxy.com",
+        "help_button": "Contact us",
+        "color_scheme": "scheme-1",
+        "padding_top": 48,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

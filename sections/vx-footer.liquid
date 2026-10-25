@@ -1,0 +1,132 @@
+<footer class="vx-footer color-{{ section.settings.color_scheme }} gradient">
+  <div class="vx-wrap">
+    <div class="vx-footer__top">
+      <div class="vx-footer__brand">
+        {%- if section.settings.logo != blank -%}
+          {{ section.settings.logo | image_url: width: 400 | image_tag: loading: 'lazy', class: 'vx-footer__logo', alt: shop.name, style: 'max-width: 140px; height: auto;' }}
+        {%- elsif settings.logo != blank -%}
+          {{ settings.logo | image_url: width: 400 | image_tag: loading: 'lazy', class: 'vx-footer__logo', alt: shop.name, style: 'max-width: 140px; height: auto;' }}
+        {%- else -%}
+          <span class="vx-footer__name">{{ shop.name }}</span>
+        {%- endif -%}
+        {%- if section.settings.tagline != blank -%}<p>{{ section.settings.tagline }}</p>{%- endif -%}
+      </div>
+      {%- for block in section.blocks -%}
+        <div class="vx-footer__col" {{ block.shopify_attributes }}>
+          <p class="vx-footer__title">{{ block.settings.title }}</p>
+          {%- case block.type -%}
+            {%- when 'menu' -%}
+              <ul class="list-unstyled">
+                {%- for link in block.settings.menu.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}
+              </ul>
+            {%- when 'text' -%}
+              <div class="rte">{{ block.settings.text }}</div>
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.show_payment -%}
+      <ul class="vx-footer__pay list-unstyled" role="list">
+        {%- for type in shop.enabled_payment_types -%}<li>{{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}</li>{%- endfor -%}
+      </ul>
+    {%- endif -%}
+    <div class="vx-footer__legal">
+      {%- if section.settings.disclaimer != blank -%}<div class="rte">{{ section.settings.disclaimer }}</div>{%- endif -%}
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}{% if section.settings.show_powered_by %} · {{ powered_by_link }}{% endif %}</p>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "VX · Footer",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo (optional, uses theme logo otherwise)"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Your daily ritual for smoother-looking, confident skin."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment",
+      "label": "Show payment icons",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "disclaimer",
+      "label": "Disclaimer",
+      "default": "<p>Velnoxy is a cosmetic massage device for at-home use. It is not a medical device and is not intended to diagnose, treat, cure or prevent any disease. Results vary.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_powered_by",
+      "label": "Show \"Powered by Shopify\"",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Support"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "default": "footer"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Contact"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>support@velnoxy.com<br>Mon–Fri: 9AM–6PM EST</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "VX · Footer"
+    }
+  ],
+  "enabled_on": {
+    "groups": [
+      "footer"
+    ]
+  }
+}
+{% endschema %}

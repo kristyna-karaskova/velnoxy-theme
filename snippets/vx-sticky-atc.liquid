@@ -1,0 +1,38 @@
+{% comment %}
+  Sticky add-to-cart bar for the product page.
+  It does not add to cart by itself: it clicks the real buy button of the main
+  product form, so Kaching Bundles (which intercepts that request) keeps working
+  and the bundle / gift logic stays identical.
+  Usage: {% render 'vx-sticky-atc', product: product, section: section, product_form_id: product_form_id %}
+{% endcomment %}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+<vx-sticky-atc
+  class="vx-sticky-atc"
+  data-form-id="{{ product_form_id }}"
+  data-section="{{ section.id }}"
+  hidden
+>
+  <div class="vx-sticky-atc__inner page-width">
+    {%- if product.featured_image -%}
+      {{
+        product.featured_image
+        | image_url: width: 120
+        | image_tag: width: 48, height: 48, loading: 'lazy', class: 'vx-sticky-atc__img', alt: ''
+      }}
+    {%- endif -%}
+    <div class="vx-sticky-atc__info">
+      <span class="vx-sticky-atc__title" data-vx-sticky-title>{{ product.title | escape }}</span>
+      <span class="vx-sticky-atc__price">
+        <span data-vx-sticky-price>{{ current_variant.price | money }}</span>
+        {%- if current_variant.compare_at_price > current_variant.price -%}
+          <s data-vx-sticky-compare>{{ current_variant.compare_at_price | money }}</s>
+        {%- else -%}
+          <s data-vx-sticky-compare hidden></s>
+        {%- endif -%}
+      </span>
+    </div>
+    <button type="button" class="button vx-sticky-atc__btn" data-vx-sticky-btn>
+      {{ section.settings.vx_sticky_label | default: 'Add to cart' }}
+    </button>
+  </div>
+</vx-sticky-atc>

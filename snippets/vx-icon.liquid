@@ -1,0 +1,60 @@
+{% comment %}
+  Small outline icon set used across Velnoxy sections.
+  Usage: {% render 'vx-icon', icon: 'shield', icon_size: 22 %}
+  Icons: shipping, gift, percent, star, shield, lock, check, cross, clock, heart, bolt, sofa, drop, hand, return, mail, chat, box
+{% endcomment %}
+{%- assign s = icon_size | default: 22 -%}
+<svg
+  class="vx-icon vx-icon--{{ icon }}"
+  width="{{ s }}"
+  height="{{ s }}"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.7"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  {%- case icon -%}
+    {%- when 'shipping' -%}
+      <path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/>
+    {%- when 'gift' -%}
+      <rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8h14v-8"/><path d="M12 8v12"/><path d="M12 8c-1.5-3-5-3.5-5-1.2C7 8 9.5 8 12 8zM12 8c1.5-3 5-3.5 5-1.2C17 8 14.5 8 12 8z"/>
+    {%- when 'percent' -%}
+      <path d="M19 5L5 19"/><circle cx="7" cy="7" r="2"/><circle cx="17" cy="17" r="2"/>
+    {%- when 'star' -%}
+      <path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>
+    {%- when 'shield' -%}
+      <path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/>
+    {%- when 'lock' -%}
+      <rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>
+    {%- when 'check' -%}
+      <path d="M5 12.5l4.5 4.5L19 7.5"/>
+    {%- when 'cross' -%}
+      <path d="M6 6l12 12M18 6L6 18"/>
+    {%- when 'clock' -%}
+      <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+    {%- when 'heart' -%}
+      <path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>
+    {%- when 'bolt' -%}
+      <path d="M13 3L5 14h6l-1 7 8-11h-6z"/>
+    {%- when 'sofa' -%}
+      <path d="M4 11V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3"/><path d="M3 11h18v6H3z"/><path d="M5 17v2M19 17v2"/>
+    {%- when 'drop' -%}
+      <path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>
+    {%- when 'hand' -%}
+      <path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V11"/><path d="M11 10.5V4a1.5 1.5 0 0 1 3 0v6.5"/><path d="M14 10.5V5.5a1.5 1.5 0 0 1 3 0V14c0 4-2.5 7-6 7s-5.5-2-7-5l-1.5-2.8a1.5 1.5 0 0 1 2.6-1.5L8 14"/>
+    {%- when 'return' -%}
+      <path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/>
+    {%- when 'mail' -%}
+      <rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>
+    {%- when 'chat' -%}
+      <path d="M4 5h16v11H9l-5 4z"/>
+    {%- when 'box' -%}
+      <path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/>
+    {%- else -%}
+      <circle cx="12" cy="12" r="9"/>
+  {%- endcase -%}
+</svg>

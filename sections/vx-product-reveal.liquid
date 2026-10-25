@@ -1,0 +1,182 @@
+<section
+  id="{% if section.settings.anchor != blank %}{{ section.settings.anchor | handleize }}{% else %}vx-{{ section.id }}{% endif %}"
+  class="vx-section vx-section--product-reveal color-{{ section.settings.color_scheme }} gradient"
+  style="--vx-pt: {{ section.settings.padding_top }}px; --vx-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="vx-wrap">
+    {% render 'vx-heading', s: section.settings %}
+    <div class="vx-reveal">
+      <div class="vx-reveal__media">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '500, 800, 1100', sizes: '(min-width: 990px) 50vw, 100vw', class: 'vx-media' }}
+        {%- else -%}
+          <div class="vx-media vx-media--empty">{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+        {%- endif -%}
+      </div>
+      <div class="vx-reveal__grid">
+        {%- for block in section.blocks -%}
+          <div class="vx-feature" {{ block.shopify_attributes }}>
+            <span class="vx-feature__big">{{ block.settings.big }}</span>
+            <h3 class="vx-card__title">{{ block.settings.title }}</h3>
+            <div class="vx-card__body rte">{{ block.settings.text }}</div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VX · Product reveal",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic words are shown in teal.",
+      "default": "Meet Velnoxy. <em>The therapist's kneading motion, in your hands.</em>"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro text",
+      "default": "<p>Every part of it was built so you'd actually use it. Every night. Without thinking about it.</p>"
+    },
+    {
+      "type": "select",
+      "id": "heading_align",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Product image (real unit)"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Anchor id (for #links)",
+      "info": "e.g. reviews → link with #reviews"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "big",
+          "label": "Big number / word",
+          "default": "21"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Rotating nodes"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>More contact per pass.</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "VX · Product reveal",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "big": "21",
+            "title": "Rotating nodes",
+            "text": "<p>More contact per pass. A deep, kneading massage instead of a buzz.</p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "big": "Auto",
+            "title": "Rotates on its own",
+            "text": "<p>No rolling back and forth. You just guide it slowly.</p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "big": "1–3",
+            "title": "Speeds you control",
+            "text": "<p>Gentle on sensitive spots, deeper on stubborn ones. [confirm number of speeds]</p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "big": "U",
+            "title": "Grip that reaches",
+            "text": "<p>Thighs, glutes, belly, arms. On your own, no help needed.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

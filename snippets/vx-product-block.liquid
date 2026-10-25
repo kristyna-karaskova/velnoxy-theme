@@ -1,0 +1,107 @@
+{% comment %}
+  Velnoxy blocks for the main product section (sections/main-product.liquid).
+  Block types: vx_rating, vx_benefits, vx_divider, vx_trust_row, vx_review, vx_delivery
+  Usage: {% render 'vx-product-block', block: block, product: product %}
+{% endcomment %}
+
+{%- case block.type -%}
+  {%- when 'vx_rating' -%}
+    {%- liquid
+      assign rating_value = block.settings.rating
+      assign rating_count = block.settings.count
+      if block.settings.use_metafields and product.metafields.reviews.rating.value != blank
+        assign rating_value = product.metafields.reviews.rating.value.rating | round: 1
+        assign rating_count = product.metafields.reviews.rating_count.value
+      endif
+    -%}
+    <a
+      href="{{ block.settings.link | default: '#reviews' }}"
+      class="vx-pb-rating"
+      {{ block.shopify_attributes }}
+    >
+      <span class="vx-stars" aria-hidden="true">★★★★★</span>
+      <span>
+        {%- if rating_value != blank %}{{ rating_value }} · {% endif -%}
+        {{ rating_count }}
+        {{ block.settings.label }}
+      </span>
+      <span class="visually-hidden">{{ rating_value }} / 5</span>
+    </a>
+
+  {%- when 'vx_benefits' -%}
+    <div class="vx-pb-benefits" {{ block.shopify_attributes }}>
+      {%- if block.settings.lead != blank -%}
+        <div class="vx-pb-benefits__lead rte">{{ block.settings.lead }}</div>
+      {%- endif -%}
+      <ul class="vx-pb-benefits__list list-unstyled" role="list">
+        {%- for i in (1..4) -%}
+          {%- assign key = 'benefit_' | append: i -%}
+          {%- if block.settings[key] != blank -%}
+            <li>
+              <span class="vx-check" aria-hidden="true">{% render 'vx-icon', icon: 'check', icon_size: 14 %}</span>
+              <span>{{ block.settings[key] }}</span>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+
+  {%- when 'vx_divider' -%}
+    <p class="vx-pb-divider" {{ block.shopify_attributes }}>
+      <span>{{ block.settings.text }}</span>
+    </p>
+
+  {%- when 'vx_trust_row' -%}
+    <ul class="vx-pb-trust list-unstyled" role="list" {{ block.shopify_attributes }}>
+      {%- for i in (1..3) -%}
+        {%- assign t_key = 'text_' | append: i -%}
+        {%- assign i_key = 'icon_' | append: i -%}
+        {%- if block.settings[t_key] != blank -%}
+          <li>
+            {% render 'vx-icon', icon: block.settings[i_key] %}
+            <span>{{ block.settings[t_key] }}</span>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+
+  {%- when 'vx_review' -%}
+    <figure class="vx-pb-review" {{ block.shopify_attributes }}>
+      {%- if block.settings.image != blank -%}
+        {{
+          block.settings.image
+          | image_url: width: 120
+          | image_tag: width: 44, height: 44, loading: 'lazy', class: 'vx-pb-review__img', alt: block.settings.name
+        }}
+      {%- endif -%}
+      <figcaption>
+        <blockquote>{{ block.settings.quote }}</blockquote>
+        <span class="vx-pb-review__who">
+          {{ block.settings.name }}
+          <span class="vx-stars" aria-hidden="true">★★★★★</span>
+          {%- if block.settings.verified %} {{ block.settings.verified_label }}{% endif -%}
+        </span>
+      </figcaption>
+    </figure>
+
+  {%- when 'vx_delivery' -%}
+    <vx-delivery
+      class="vx-pb-delivery"
+      data-min="{{ block.settings.min_days }}"
+      data-max="{{ block.settings.max_days }}"
+      data-business="{{ block.settings.business_days }}"
+      data-cutoff="{{ block.settings.cutoff_hour }}"
+      {{ block.shopify_attributes }}
+    >
+      {% render 'vx-icon', icon: 'shipping' %}
+      {%- assign parts = block.settings.text | split: '[start]' -%}
+      {%- assign tail = parts[1] | split: '[end]' -%}
+      <span>
+        {{- parts[0] -}}
+        <strong data-vx-date="start"></strong>
+        {{- tail[0] -}}
+        <strong data-vx-date="end"></strong>
+        {{- tail[1] -}}
+      </span>
+    </vx-delivery>
+{%- endcase -%}

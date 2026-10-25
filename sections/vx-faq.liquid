@@ -1,0 +1,198 @@
+<section
+  id="{% if section.settings.anchor != blank %}{{ section.settings.anchor | handleize }}{% else %}vx-{{ section.id }}{% endif %}"
+  class="vx-section vx-section--faq color-{{ section.settings.color_scheme }} gradient"
+  style="--vx-pt: {{ section.settings.padding_top }}px; --vx-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="vx-wrap vx-wrap--narrow">
+    {% render 'vx-heading', s: section.settings %}
+    <div class="vx-faq-list">
+      {%- for block in section.blocks -%}
+        <details class="vx-acc" {% if forloop.first and section.settings.open_first %}open{% endif %} {{ block.shopify_attributes }}>
+          <summary><h3 class="vx-acc__q">{{ block.settings.question }}</h3><span class="vx-acc__sign" aria-hidden="true"></span></summary>
+          <div class="vx-acc__a rte">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.link_label != blank -%}
+      <div class="vx-actions vx-actions--center"><a class="vx-link-arrow" href="{{ section.settings.link | default: '/pages/faq' }}">{{ section.settings.link_label }}</a></div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VX · FAQ accordion",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic words are shown in teal.",
+      "default": "Still have questions? Good."
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro text",
+      "default": "<p>You've been burned by big promises before. Here are straight answers.</p>"
+    },
+    {
+      "type": "select",
+      "id": "heading_align",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first",
+      "label": "Open first question",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link below (optional)"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Anchor id (for #links)",
+      "info": "e.g. reviews → link with #reviews",
+      "default": "faq"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "qa",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Question?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Answer.</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "VX · FAQ accordion",
+      "blocks": [
+        {
+          "type": "qa",
+          "settings": {
+            "question": "Does it hurt?",
+            "answer": "<p>No. It feels like a deep massage, not a workout. Start on the lowest speed and only go up when it feels good. If anything hurts, ease off.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "I'm thin / I lift / I'm in menopause. Will it still work for me?",
+            "answer": "<p>Cellulite shows up at every size and every age, because it's about the tissue under your skin, not your weight. Velnoxy works that tissue directly, so it fits your body as it is right now.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "How soon will I notice something?",
+            "answer": "<p>Most women feel warm, lighter-feeling legs after the very first session. Changes in how your skin looks take steady use over several weeks. Everyone is different.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "I always quit routines. Why would this be different?",
+            "answer": "<p>Because it doesn't ask for willpower. It's cordless, it rotates on its own, and you use it on the couch for 10 minutes. You were already sitting there anyway.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "Does it stall when I press harder?",
+            "answer": "<p>[Confirm with supplier: motor torque under pressure.] Let the rollers do the work. A light, steady glide is all you need.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "Do I need the massage oil?",
+            "answer": "<p>You can use any body oil. The Premium Massage Oil in the Essential Kit helps the nodes glide smoothly, so every session feels comfortable.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "What if it's not for me?",
+            "answer": "<p>You have 30 days. Use it every night. If you don't love it, contact support@velnoxy.com for a full refund.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

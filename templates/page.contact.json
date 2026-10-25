@@ -1,0 +1,63 @@
+{
+  "sections": {
+    "main": {
+      "type": "vx-contact",
+      "settings": {
+        "heading": "Talk to a real person.",
+        "intro": "<p>Questions about your order, your device or your routine. We read every message and answer on weekdays.</p>",
+        "label_name": "Your name",
+        "label_email": "Email",
+        "label_order": "Order number",
+        "label_order_hint": "(if you have one)",
+        "label_topic": "What's it about?",
+        "topics": "My order or delivery\nUsing my Velnoxy\nReturn or refund\nSomething else",
+        "label_message": "Message",
+        "button": "Send message",
+        "success_title": "Got it. Thank you! ",
+        "success_text": "We'll reply to your email within 1 business day. Check your spam folder just in case.",
+        "email_label": "Email",
+        "email": "support@velnoxy.com",
+        "hours_label": "Support hours",
+        "hours": "Mon–Fri, 9AM–6PM EST",
+        "reply_label": "Reply time",
+        "reply": "Within 1 business day",
+        "links_title": "Faster answers",
+        "guarantee": "<p>Every order has our <strong>30-day money-back guarantee.</strong></p>",
+        "color_scheme": "scheme-1",
+        "padding_top": 56,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "link_1": {
+          "type": "link",
+          "settings": {
+            "label": "Where's my order?",
+            "link": "/apps/parcelpanel"
+          }
+        },
+        "link_2": {
+          "type": "link",
+          "settings": {
+            "label": "Start a return",
+            "link": "/policies/refund-policy"
+          }
+        },
+        "link_3": {
+          "type": "link",
+          "settings": {
+            "label": "How do I use it?",
+            "link": "/pages/faq"
+          }
+        }
+      },
+      "block_order": [
+        "link_1",
+        "link_2",
+        "link_3"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

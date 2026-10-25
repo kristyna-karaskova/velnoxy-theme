@@ -1,0 +1,215 @@
+<section
+  id="{% if section.settings.anchor != blank %}{{ section.settings.anchor | handleize }}{% else %}vx-{{ section.id }}{% endif %}"
+  class="vx-section vx-section--mechanism color-{{ section.settings.color_scheme }} gradient"
+  style="--vx-pt: {{ section.settings.padding_top }}px; --vx-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="vx-wrap">
+    {% render 'vx-heading', s: section.settings %}
+    <div class="vx-grid vx-grid--3 vx-mech">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign good = block.settings.good
+          case block.settings.motion
+            when 'flat'
+              assign path = 'M16 18 L284 18'
+            when 'zigzag'
+              assign path = 'M16 26 L34 18 L52 34 L70 18 L88 34 L106 18 L124 34 L142 18 L160 34 L178 18 L196 34 L214 18 L232 34 L250 18 L268 34 L284 26'
+            else
+              assign path = 'M16 34 C44 96 64 96 84 34 C104 96 124 96 144 34 C164 96 184 96 204 34 C224 96 244 96 284 34'
+          endcase
+        -%}
+        <div class="vx-mech__card{% if good %} is-good{% endif %}" {{ block.shopify_attributes }}>
+          <div class="vx-mech__top">
+            <span class="vx-mech__label">{{ block.settings.label }}</span>
+            <span class="vx-mark {% if good %}vx-mark--yes{% else %}vx-mark--no{% endif %}">
+              {%- if good %}{% render 'vx-icon', icon: 'check', icon_size: 14 %}{% else %}{% render 'vx-icon', icon: 'cross', icon_size: 14 %}{% endif -%}
+            </span>
+          </div>
+          <svg viewBox="0 0 300 110" role="img" aria-label="{{ block.settings.title | escape }}" class="vx-mech__svg">
+            <rect x="0" y="16" width="300" height="22" fill="#F3D9CB"/>
+            <rect x="0" y="38" width="300" height="34" fill="#EBC1AC"/>
+            <rect x="0" y="72" width="300" height="34" fill="#D9A58C"/>
+            <path d="{{ path }}" fill="none" stroke="{% if good %}#0B7A6E{% else %}#C2412F{% endif %}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h3 class="vx-card__title">{{ block.settings.title }}</h3>
+          <div class="vx-card__body rte">{{ block.settings.text }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VX · Mechanism comparison",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "WHAT ACTUALLY MAKES SENSE"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic words are shown in teal.",
+      "default": "To change what you see on top, you have to move what's underneath."
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro text",
+      "default": "<p>Press. Lift. Release. Over and over. That's what a lymphatic massage therapist's hands do. It's also why one session costs $80–120.</p>"
+    },
+    {
+      "type": "select",
+      "id": "heading_align",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Anchor id (for #links)",
+      "info": "e.g. reviews → link with #reviews"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "method",
+      "name": "Method",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "CREAMS"
+        },
+        {
+          "type": "checkbox",
+          "id": "good",
+          "label": "Highlight as the right method",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "motion",
+          "label": "Illustration",
+          "options": [
+            {
+              "value": "flat",
+              "label": "Stays on surface"
+            },
+            {
+              "value": "zigzag",
+              "label": "Vibrates on surface"
+            },
+            {
+              "value": "knead",
+              "label": "Kneads deeper"
+            }
+          ],
+          "default": "flat"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Sit on the surface"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Nice to rub in. Nothing underneath moves.</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "VX · Mechanism comparison",
+      "blocks": [
+        {
+          "type": "method",
+          "settings": {
+            "label": "CREAMS",
+            "good": false,
+            "motion": "flat",
+            "title": "Sit on the surface",
+            "text": "<p>Nice to rub in. Nothing underneath moves.</p>"
+          }
+        },
+        {
+          "type": "method",
+          "settings": {
+            "label": "VIBRATING TOOLS",
+            "good": false,
+            "motion": "zigzag",
+            "title": "Shake one spot",
+            "text": "<p>They buzz on top of the skin. They don't press, lift and release.</p>"
+          }
+        },
+        {
+          "type": "method",
+          "settings": {
+            "label": "ROTATION",
+            "good": true,
+            "motion": "knead",
+            "title": "Knead and move",
+            "text": "<p>Nodes roll in a steady circle (press, lift, release) the way a therapist's hands do.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

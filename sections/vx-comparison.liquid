@@ -1,0 +1,246 @@
+<section
+  id="{% if section.settings.anchor != blank %}{{ section.settings.anchor | handleize }}{% else %}vx-{{ section.id }}{% endif %}"
+  class="vx-section vx-section--comparison color-{{ section.settings.color_scheme }} gradient"
+  style="--vx-pt: {{ section.settings.padding_top }}px; --vx-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="vx-wrap vx-wrap--narrow">
+    {% render 'vx-heading', s: section.settings %}
+    <div class="vx-table-wrap">
+      <table class="vx-table">
+        <thead>
+          <tr>
+            <th scope="col"><span class="visually-hidden">{{ section.settings.feature_label }}</span></th>
+            <th scope="col" class="is-us">{{ section.settings.col_a }}</th>
+            <th scope="col">{{ section.settings.col_b }}</th>
+            <th scope="col">{{ section.settings.col_c }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for block in section.blocks -%}
+            <tr {{ block.shopify_attributes }}>
+              <th scope="row">{{ block.settings.feature }}</th>
+              {%- assign cells = block.settings.a | append: '||' | append: block.settings.b | append: '||' | append: block.settings.c | split: '||' -%}
+              {%- for cell in cells -%}
+                {%- assign c = cell | strip -%}
+                <td{% if forloop.first %} class="is-us"{% endif %}>
+                  {%- if c == 'yes' -%}
+                    <span class="vx-mark vx-mark--yes">{% render 'vx-icon', icon: 'check', icon_size: 14 %}</span><span class="visually-hidden">Yes</span>
+                  {%- elsif c == 'no' -%}
+                    <span class="vx-mark vx-mark--no">{% render 'vx-icon', icon: 'cross', icon_size: 14 %}</span><span class="visually-hidden">No</span>
+                  {%- else -%}
+                    {{ c }}
+                  {%- endif -%}
+                </td>
+              {%- endfor -%}
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VX · Comparison table",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic words are shown in teal.",
+      "default": "Why women switch to Velnoxy"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro text"
+    },
+    {
+      "type": "select",
+      "id": "heading_align",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "text",
+      "id": "feature_label",
+      "label": "Feature column label (screen readers)",
+      "default": "Feature"
+    },
+    {
+      "type": "text",
+      "id": "col_a",
+      "label": "Column 1 (you)",
+      "default": "Velnoxy"
+    },
+    {
+      "type": "text",
+      "id": "col_b",
+      "label": "Column 2",
+      "default": "Cellulite creams"
+    },
+    {
+      "type": "text",
+      "id": "col_c",
+      "label": "Column 3",
+      "default": "Spa massage"
+    },
+    {
+      "type": "paragraph",
+      "content": "In rows, type yes or no to show a check or a cross. Anything else is shown as text."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Anchor id (for #links)",
+      "info": "e.g. reviews → link with #reviews"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "feature",
+          "label": "Feature",
+          "default": "Feature"
+        },
+        {
+          "type": "text",
+          "id": "a",
+          "label": "Column 1",
+          "default": "yes"
+        },
+        {
+          "type": "text",
+          "id": "b",
+          "label": "Column 2",
+          "default": "no"
+        },
+        {
+          "type": "text",
+          "id": "c",
+          "label": "Column 3",
+          "default": "yes"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "VX · Comparison table",
+      "blocks": [
+        {
+          "type": "row",
+          "settings": {
+            "feature": "Works under the surface",
+            "a": "yes",
+            "b": "no",
+            "c": "yes"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature": "Use at home, any time",
+            "a": "yes",
+            "b": "yes",
+            "c": "no"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature": "No appointment or drive",
+            "a": "yes",
+            "b": "yes",
+            "c": "no"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature": "No mess",
+            "a": "yes",
+            "b": "no",
+            "c": "yes"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature": "Feels like a massage",
+            "a": "yes",
+            "b": "no",
+            "c": "yes"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature": "What you pay",
+            "a": "$84.90 once",
+            "b": "A new jar every month",
+            "c": "$80–120 every session"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

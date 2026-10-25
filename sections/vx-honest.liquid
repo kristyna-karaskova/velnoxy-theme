@@ -1,0 +1,142 @@
+<section
+  id="{% if section.settings.anchor != blank %}{{ section.settings.anchor | handleize }}{% else %}vx-{{ section.id }}{% endif %}"
+  class="vx-section vx-section--honest color-{{ section.settings.color_scheme }} gradient"
+  style="--vx-pt: {{ section.settings.padding_top }}px; --vx-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="vx-wrap vx-wrap--narrow">
+    {% render 'vx-heading', s: section.settings %}
+    <div class="vx-grid vx-grid--2 vx-honest">
+      <div class="vx-honest__card is-yes">
+        <h3 class="vx-card__title">{{ section.settings.yes_title }}</h3>
+        <ul class="list-unstyled">
+          {%- assign items = section.settings.yes_list | newline_to_br | split: '<br />' -%}
+          {%- for it in items -%}{%- assign t = it | strip -%}{%- if t != blank -%}
+            <li><span class="vx-tick is-yes">{% render 'vx-icon', icon: 'check', icon_size: 16 %}</span>{{ t }}</li>
+          {%- endif -%}{%- endfor -%}
+        </ul>
+      </div>
+      <div class="vx-honest__card">
+        <h3 class="vx-card__title">{{ section.settings.no_title }}</h3>
+        <ul class="list-unstyled">
+          {%- assign items = section.settings.no_list | newline_to_br | split: '<br />' -%}
+          {%- for it in items -%}{%- assign t = it | strip -%}{%- if t != blank -%}
+            <li><span class="vx-tick is-no">{% render 'vx-icon', icon: 'cross', icon_size: 16 %}</span>{{ t }}</li>
+          {%- endif -%}{%- endfor -%}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VX · Honest fit",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic words are shown in teal.",
+      "default": "Let's be honest for a second."
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro text",
+      "default": "<p>Velnoxy isn't magic. It won't change your skin overnight. And it does nothing in a drawer. It works when it becomes your 10 minutes, most nights, for weeks. If you can give it that, it's built for you.</p>"
+    },
+    {
+      "type": "select",
+      "id": "heading_align",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "text",
+      "id": "yes_title",
+      "label": "Left title",
+      "default": "Velnoxy is for you if…"
+    },
+    {
+      "type": "textarea",
+      "id": "yes_list",
+      "label": "Left list (one per line)",
+      "default": "You've tried creams, scrubs or brushing and got nothing\nYou sit a lot and your legs feel heavy by evening\nYou can give it 10 minutes most nights\nYou want something that feels good, not painful"
+    },
+    {
+      "type": "text",
+      "id": "no_title",
+      "label": "Right title",
+      "default": "Skip it if…"
+    },
+    {
+      "type": "textarea",
+      "id": "no_list",
+      "label": "Right list (one per line)",
+      "default": "You want a change by next weekend\nYou won't use it more than once a week\nYou want a medical treatment"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Anchor id (for #links)",
+      "info": "e.g. reviews → link with #reviews"
+    }
+  ],
+  "presets": [
+    {
+      "name": "VX · Honest fit"
+    }
+  ]
+}
+{% endschema %}

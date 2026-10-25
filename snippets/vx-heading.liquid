@@ -1,0 +1,19 @@
+{% comment %}
+  Shared heading group for Velnoxy sections.
+  Wrap a word in italics in the heading field to color it teal.
+  Usage: {% render 'vx-heading', s: section.settings, align: 'left', tag: 'h2' %}
+{% endcomment %}
+{%- assign h_tag = tag | default: 'h2' -%}
+{%- if s.eyebrow != blank or s.heading != blank or s.intro != blank -%}
+  <div class="vx-head vx-head--{{ align | default: s.heading_align | default: 'left' }}">
+    {%- if s.eyebrow != blank -%}
+      <p class="vx-eyebrow">{{ s.eyebrow }}</p>
+    {%- endif -%}
+    {%- if s.heading != blank -%}
+      <{{ h_tag }} class="vx-h2">{{ s.heading }}</{{ h_tag }}>
+    {%- endif -%}
+    {%- if s.intro != blank -%}
+      <div class="vx-intro rte">{{ s.intro }}</div>
+    {%- endif -%}
+  </div>
+{%- endif -%}

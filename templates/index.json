@@ -1,0 +1,298 @@
+{
+  "sections": {
+    "hero": {
+      "type": "vx-hero",
+      "settings": {
+        "overlay": 45,
+        "min_height": 600,
+        "eyebrow": "VELNOXY™",
+        "heading": "Your legs shouldn't decide <em>what you wear.</em>",
+        "text": "<p>21 rotating nodes knead the tissue under your skin, the part creams never reach. 10 minutes a night, on the couch.</p>",
+        "button_label": "SHOP VELNOXY",
+        "rating_text": "4.8 · 2,417 reviews",
+        "color_scheme": "scheme-5",
+        "button_link": "/products/velnoxy-massager"
+      }
+    },
+    "trust": {
+      "type": "vx-trust-strip",
+      "settings": {
+        "color_scheme": "scheme-3",
+        "padding_top": 16,
+        "padding_bottom": 16
+      },
+      "blocks": {
+        "item_1": {
+          "type": "item",
+          "settings": {
+            "icon": "shield",
+            "text": "30-Day Money-Back"
+          }
+        },
+        "item_2": {
+          "type": "item",
+          "settings": {
+            "icon": "shipping",
+            "text": "Free Shipping"
+          }
+        },
+        "item_3": {
+          "type": "item",
+          "settings": {
+            "icon": "clock",
+            "text": "Ships within 24 hours"
+          }
+        },
+        "item_4": {
+          "type": "item",
+          "settings": {
+            "icon": "lock",
+            "text": "Secure Checkout"
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4"
+      ]
+    },
+    "featured": {
+      "type": "vx-featured-product",
+      "settings": {
+        "badge": "OUR ONE PRODUCT",
+        "from_label": "from",
+        "text": "<p>We make one thing. So we made it properly. It rotates on its own, so you don't have to roll it back and forth. You just guide it.</p>",
+        "bullets": "21 rotating nodes that press, lift and release\nCordless, so you can use it anywhere at home\nFeels like a deep massage. Gentle speeds to start.",
+        "show_chips": true,
+        "chip_labels": "1: Device Only\n2: Essential Kit\n3: Full Ritual",
+        "highlight_chip": 2,
+        "button_label": "Choose your ritual",
+        "color_scheme": "scheme-1",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "product": "velnoxy-massager"
+      }
+    },
+    "why": {
+      "type": "vx-card-grid",
+      "settings": {
+        "heading": "You didn't fail. You were handed the wrong tools.",
+        "intro": "",
+        "heading_align": "left",
+        "card_style": "number",
+        "columns": "3",
+        "color_scheme": "scheme-3",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "eyebrow": "WHY NOTHING ELSE WORKED",
+        "button_label": "See how Velnoxy works →",
+        "button_link": "/products/velnoxy-massager"
+      },
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "icon": "check",
+            "title": "It was never a fat problem.",
+            "text": "<p>Thin women get it. Lifters get it. It can even look worse after weight loss. It's about the tissue under your skin.</p>"
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "icon": "check",
+            "title": "Your chair hits pause.",
+            "text": "<p>Your lymph has no pump. It moves when your muscles move. Sit 8 hours, and everything in your thighs just sits too.</p>"
+          }
+        },
+        "card_3": {
+          "type": "card",
+          "settings": {
+            "icon": "check",
+            "title": "Creams stay on top.",
+            "text": "<p>Most are sold as cosmetics, so they only have to be safe, not proven to work. Nothing underneath moves.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3"
+      ]
+    },
+    "founder": {
+      "type": "vx-founder",
+      "settings": {
+        "heading": "Why I built Velnoxy",
+        "text": "<p>Okay, the honest version. I didn't start Velnoxy because I found some miracle.</p><p>I started it because I was so tired of products that promise everything. Creams. Scrubs. \"Clinically proven\" stuff with no study anywhere. And then they just… didn't.</p><p>So I went looking for the thing that actually made sense. Not something that sits on your skin. Something that moves what's under it.</p><p>No filters. No fake before/afters. Just a tool that does the kneading for you, 10 minutes a night.</p>",
+        "name": "Kristýna",
+        "role": "Founder of Velnoxy",
+        "color_scheme": "scheme-2",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "ugc": {
+      "type": "vx-ugc",
+      "settings": {
+        "heading": "Real women. Real routines.",
+        "intro": "<p>No studio. No perfect lighting. Just how it actually looks at home.</p>",
+        "heading_align": "left",
+        "show_badge": false,
+        "rating": "4.8",
+        "count": "2,417 reviews",
+        "color_scheme": "scheme-1",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "anchor": ""
+      },
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "quote": "Real review: the routine she actually keeps.",
+            "name": "[Name], 34 · lifts 4×/week · ✓ Verified"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "quote": "Real review: legs feel lighter after work.",
+            "name": "[Name], 41 · desk job · ✓ Verified"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "quote": "Real review: finally not another cream.",
+            "name": "[Name], 48 · tried everything · ✓ Verified"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3"
+      ]
+    },
+    "steps": {
+      "type": "vx-steps",
+      "settings": {
+        "heading": "10 minutes. On the couch. While your show plays.",
+        "intro": "",
+        "heading_align": "left",
+        "style": "compact",
+        "step_label": "STEP",
+        "footnote": "",
+        "color_scheme": "scheme-2",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Add a little oil",
+            "text": "<p>A few drops so the nodes glide.</p>"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Pick your speed",
+            "text": "<p>Start low. Go up when it feels good.</p>"
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "Glide for 10 minutes",
+            "text": "<p>Thighs, glutes, belly or arms. That's it.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ]
+    },
+    "faq": {
+      "type": "vx-faq",
+      "settings": {
+        "heading": "The questions everyone asks first",
+        "intro": "",
+        "heading_align": "center",
+        "open_first": true,
+        "color_scheme": "scheme-1",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "anchor": "faq",
+        "link_label": "See all questions →",
+        "link": "/pages/faq"
+      },
+      "blocks": {
+        "qa_1": {
+          "type": "qa",
+          "settings": {
+            "question": "Does it hurt?",
+            "answer": "<p>No. It feels like a deep massage, not a workout. Start on the lowest speed and only go up when it feels good. If anything hurts, ease off.</p>"
+          }
+        },
+        "qa_2": {
+          "type": "qa",
+          "settings": {
+            "question": "I'm thin / I lift / I'm in menopause. Will it still work for me?",
+            "answer": "<p>Cellulite shows up at every size and every age, because it's about the tissue under your skin, not your weight. Velnoxy works that tissue directly, so it fits your body as it is right now.</p>"
+          }
+        },
+        "qa_3": {
+          "type": "qa",
+          "settings": {
+            "question": "How soon will I notice something?",
+            "answer": "<p>Most women feel warm, lighter-feeling legs after the very first session. Changes in how your skin looks take steady use over several weeks. Everyone is different.</p>"
+          }
+        },
+        "qa_7": {
+          "type": "qa",
+          "settings": {
+            "question": "What if it's not for me?",
+            "answer": "<p>You have 30 days. Use it every night. If you don't love it, contact support@velnoxy.com for a full refund.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "qa_1",
+        "qa_2",
+        "qa_3",
+        "qa_7"
+      ]
+    },
+    "cta": {
+      "type": "vx-cta-band",
+      "settings": {
+        "heading": "It starts with 10 minutes tonight.",
+        "text": "<p>Try it every night for 30 days. If you don't love it, you get your money back.</p>",
+        "button_label": "Shop Velnoxy",
+        "small": "",
+        "color_scheme": "scheme-4",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "button_link": "/products/velnoxy-massager"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "trust",
+    "featured",
+    "why",
+    "founder",
+    "ugc",
+    "steps",
+    "faq",
+    "cta"
+  ]
+}

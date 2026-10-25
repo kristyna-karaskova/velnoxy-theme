@@ -1,0 +1,129 @@
+{%- liquid
+  assign overlay = section.settings.overlay | divided_by: 100.0
+-%}
+<section
+  id="vx-{{ section.id }}"
+  class="vx-hero color-{{ section.settings.color_scheme }}"
+  style="--vx-hero-h: {{ section.settings.min_height }}px; --vx-overlay: {{ overlay }};"
+>
+  {%- if section.settings.image != blank -%}
+    {{
+      section.settings.image
+      | image_url: width: 2400
+      | image_tag:
+        loading: 'eager',
+        fetchpriority: 'high',
+        widths: '750, 1100, 1500, 1800, 2400',
+        sizes: '100vw',
+        class: 'vx-hero__img'
+    }}
+    {%- if section.settings.image_mobile != blank -%}
+      {{
+        section.settings.image_mobile
+        | image_url: width: 1200
+        | image_tag: loading: 'eager', widths: '375, 750, 1100', sizes: '100vw', class: 'vx-hero__img vx-hero__img--mobile'
+      }}
+    {%- endif -%}
+  {%- else -%}
+    <div class="vx-hero__img vx-media--empty">{{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+  {%- endif -%}
+  <div class="vx-hero__content vx-wrap">
+    {%- if section.settings.eyebrow != blank -%}<p class="vx-eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+    {%- if section.settings.heading != blank -%}<h1 class="vx-hero__title">{{ section.settings.heading }}</h1>{%- endif -%}
+    {%- if section.settings.text != blank -%}<div class="vx-hero__text rte">{{ section.settings.text }}</div>{%- endif -%}
+    {%- if section.settings.button_label != blank -%}
+      <a href="{{ section.settings.button_link | default: '/products' }}" class="button vx-hero__btn">{{ section.settings.button_label }}</a>
+    {%- endif -%}
+    {%- if section.settings.rating_text != blank -%}
+      <p class="vx-hero__rating"><span class="vx-stars" aria-hidden="true">★★★★★</span>{{ section.settings.rating_text }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VX · Hero",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile image (optional)"
+    },
+    {
+      "type": "range",
+      "id": "overlay",
+      "label": "Image darkening",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Minimum height",
+      "min": 360,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "default": 600
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "VELNOXY™"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic words are shown in teal.",
+      "default": "Your legs shouldn't decide <em>what you wear.</em>"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>21 rotating nodes knead the tissue under your skin, the part creams never reach. 10 minutes a night, on the couch.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "SHOP VELNOXY"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating line",
+      "info": "Only real review numbers.",
+      "default": "4.8 · 2,417 reviews"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-5"
+    }
+  ],
+  "presets": [
+    {
+      "name": "VX · Hero"
+    }
+  ]
+}
+{% endschema %}

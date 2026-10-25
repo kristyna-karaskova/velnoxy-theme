@@ -1,0 +1,338 @@
+<vx-faq class="vx-faq-page">
+  <section class="vx-section vx-faq-page__hero color-{{ section.settings.hero_scheme }} gradient" style="--vx-pt: 64px; --vx-pb: 48px;">
+    <div class="vx-wrap vx-wrap--narrow vx-head vx-head--center">
+      <h1 class="vx-h2">{{ section.settings.heading }}</h1>
+      {%- if section.settings.intro != blank -%}<div class="vx-intro rte">{{ section.settings.intro }}</div>{%- endif -%}
+      <label class="visually-hidden" for="VxFaqSearch-{{ section.id }}">{{ section.settings.search_placeholder }}</label>
+      <div class="vx-search">
+        {% render 'vx-icon', icon: 'chat', icon_size: 18 %}
+        <input id="VxFaqSearch-{{ section.id }}" type="search" placeholder="{{ section.settings.search_placeholder | escape }}" data-vx-faq-search autocomplete="off">
+      </div>
+    </div>
+  </section>
+  <section class="vx-section color-{{ section.settings.color_scheme }} gradient" style="--vx-pt: 40px; --vx-pb: 72px;">
+    <div class="vx-wrap vx-faq-page__layout">
+      <nav class="vx-faq-page__nav" aria-label="{{ section.settings.nav_label }}">
+        {%- assign cat_index = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'category' -%}
+            {%- assign cat_index = cat_index | plus: 1 -%}
+            {%- assign count = 0 -%}
+            {%- assign counting = false -%}
+            {%- for b in section.blocks -%}
+              {%- if b.id == block.id -%}{%- assign counting = true -%}{%- continue -%}{%- endif -%}
+              {%- if counting and b.type == 'category' -%}{%- break -%}{%- endif -%}
+              {%- if counting -%}{%- assign count = count | plus: 1 -%}{%- endif -%}
+            {%- endfor -%}
+            <button type="button" data-vx-faq-tab="c{{ cat_index }}" aria-pressed="false" {{ block.shopify_attributes }}>
+              {{ block.settings.title }}<span>{{ count }}</span>
+            </button>
+          {%- endif -%}
+        {%- endfor -%}
+      </nav>
+      <div class="vx-faq-page__main">
+        {%- assign cat_index = 0 -%}
+        {%- for category in section.blocks -%}
+          {%- if category.type == 'category' -%}
+            {%- assign cat_index = cat_index | plus: 1 -%}
+            <div class="vx-faq-group" data-vx-faq-group="c{{ cat_index }}">
+              <h2 class="vx-faq-group__title">{{ category.settings.title }}</h2>
+              <div class="vx-faq-list">
+                {%- assign inside = false -%}
+                {%- for block in section.blocks -%}
+                  {%- if block.id == category.id -%}
+                    {%- assign inside = true -%}
+                    {%- continue -%}
+                  {%- endif -%}
+                  {%- if inside and block.type == 'category' -%}{%- break -%}{%- endif -%}
+                  {%- if inside -%}
+                    <details class="vx-acc" {{ block.shopify_attributes }}>
+                      <summary><h3 class="vx-acc__q">{{ block.settings.question }}</h3><span class="vx-acc__sign" aria-hidden="true"></span></summary>
+                      <div class="vx-acc__a rte">{{ block.settings.answer }}</div>
+                    </details>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+        <p class="vx-faq-page__empty" data-vx-faq-empty hidden>{{ section.settings.empty_text }}</p>
+        <div class="vx-help-box">
+          <div><strong>{{ section.settings.help_title }}</strong><span>{{ section.settings.help_text }}</span></div>
+          <a href="{{ section.settings.help_link | default: '/pages/contact' }}" class="button">{{ section.settings.help_button }}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</vx-faq>
+
+{% schema %}
+{
+  "name": "VX · FAQ page",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Questions? Good. <em>Here are straight answers.</em>"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro",
+      "default": "<p>You've heard big promises before. So here's what Velnoxy does, what it doesn't, and how everything works.</p>"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search placeholder",
+      "default": "Search, e.g. \"battery\" or \"returns\""
+    },
+    {
+      "type": "text",
+      "id": "nav_label",
+      "label": "Categories label (screen readers)",
+      "default": "FAQ categories"
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "No results text",
+      "default": "No matching questions. Try another word or contact us."
+    },
+    {
+      "type": "text",
+      "id": "help_title",
+      "label": "Help box title",
+      "default": "Still stuck?"
+    },
+    {
+      "type": "text",
+      "id": "help_text",
+      "label": "Help box text",
+      "default": "Write to us. A real person answers Mon–Fri, 9AM–6PM EST."
+    },
+    {
+      "type": "text",
+      "id": "help_button",
+      "label": "Help button",
+      "default": "Contact us"
+    },
+    {
+      "type": "url",
+      "id": "help_link",
+      "label": "Help link"
+    },
+    {
+      "type": "color_scheme",
+      "id": "hero_scheme",
+      "label": "Header color scheme",
+      "default": "scheme-3"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category",
+          "default": "Category"
+        }
+      ]
+    },
+    {
+      "type": "qa",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Question?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Answer.</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 50,
+  "presets": [
+    {
+      "name": "VX · FAQ page",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "title": "Using Velnoxy"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "How do I use it?",
+            "answer": "<p>Put a few drops of oil on your skin. Turn it on and pick a speed. Glide it slowly upward over thighs, glutes, belly or arms for about 10 minutes. The rollers turn on their own, so you only guide it. [confirm against the user manual]</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "How often should I use it?",
+            "answer": "<p>Most women use it most nights, about 10 minutes per session. It works best as a habit, not a once-a-week thing. [confirm recommended frequency in manual]</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "Does it hurt?",
+            "answer": "<p>No. It feels like a deep massage. Start on the lowest speed and only go up when it feels good. On sensitive spots, use less pressure. Pain is not a sign it's working: if anything hurts, stop.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "Do I need massage oil?",
+            "answer": "<p>Oil helps the nodes glide smoothly so it stays comfortable. Any body oil works. The Essential Kit includes our Premium Massage Oil.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "Can I use it after a workout?",
+            "answer": "<p>Yes. Lots of women use it on sore legs after the gym. It feels like a recovery massage.</p>"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Results"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "How soon will I notice something?",
+            "answer": "<p>Most women feel warm, lighter-feeling legs after the first session. Changes in how skin looks take steady use over several weeks. Everyone's body is different, and results vary.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "I'm thin / I lift / I'm in menopause. Will it work for me?",
+            "answer": "<p>Cellulite shows up at every size and every age, because it's about the tissue under your skin, not your weight. Velnoxy works that tissue directly, so it fits your body as it is right now.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "Is this a medical treatment?",
+            "answer": "<p>No. Velnoxy is a cosmetic massage device for at-home use. It isn't meant to treat any medical condition. If you're pregnant, have a skin condition, varicose veins or a health concern, ask your doctor first. [align with safety notes in manual]</p>"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "The device"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "How many speeds does it have?",
+            "answer": "<p>Velnoxy has multiple speeds, from gentle to deep. [add exact number of speeds]</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "How long does the battery last?",
+            "answer": "<p>It's cordless and rechargeable. [add battery life, charge time, cable type]</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "Does the motor stall if I press harder?",
+            "answer": "<p>Let the rollers do the work. A light, steady glide is all you need. [confirm torque under pressure with supplier]</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "Can I use it in the shower?",
+            "answer": "<p>Please keep it dry unless the manual says it's water-resistant. [confirm water rating]</p>"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Shipping & orders"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "Where do you ship?",
+            "answer": "<p>We ship to the US with free shipping. [list all shipping countries]</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "How long does delivery take?",
+            "answer": "<p>Orders ship within 24 hours. You'll get a tracking link by email as soon as it's on its way. [add delivery estimate in business days]</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "How do I track my order?",
+            "answer": "<p>Use the tracking link in your shipping email, or go to Track Your Order and enter your order number and email.</p>"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Returns & guarantee"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "How does the 30-day guarantee work?",
+            "answer": "<p>Use it for up to 30 days. If you don't love it, email support@velnoxy.com with your order number. We'll send return steps and refund you once it's back. [match exact Refund Policy terms]</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "Who pays for return shipping?",
+            "answer": "<p>See our Refund Policy for return shipping details. [decide: free return label or customer pays]</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "My device arrived damaged. What now?",
+            "answer": "<p>Sorry about that. Email us a photo and your order number within 48 hours of delivery and we'll make it right. [confirm damage process]</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

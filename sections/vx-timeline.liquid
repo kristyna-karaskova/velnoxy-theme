@@ -1,0 +1,176 @@
+<section
+  id="{% if section.settings.anchor != blank %}{{ section.settings.anchor | handleize }}{% else %}vx-{{ section.id }}{% endif %}"
+  class="vx-section vx-section--timeline color-{{ section.settings.color_scheme }} gradient"
+  style="--vx-pt: {{ section.settings.padding_top }}px; --vx-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="vx-wrap">
+    {% render 'vx-heading', s: section.settings %}
+    <ol class="vx-grid vx-grid--4 vx-timeline list-unstyled">
+      {%- for block in section.blocks -%}
+        <li class="vx-timeline__item{% cycle '', ' is-alt', ' is-alt', '' %}" {{ block.shopify_attributes }}>
+          <span class="vx-pill">{{ block.settings.when }}</span>
+          <h3 class="vx-card__title">{{ block.settings.title }}</h3>
+          <div class="vx-card__body rte">{{ block.settings.text }}</div>
+        </li>
+      {%- endfor -%}
+    </ol>
+    {%- if section.settings.disclaimer != blank -%}
+      <p class="vx-disclaimer">{{ section.settings.disclaimer }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VX · Timeline",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic words are shown in teal.",
+      "default": "What your first 30 days can feel like"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro text"
+    },
+    {
+      "type": "select",
+      "id": "heading_align",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "text",
+      "id": "disclaimer",
+      "label": "Small print",
+      "default": "Everyone's skin is different. Results vary with consistency."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Anchor id (for #links)",
+      "info": "e.g. reviews → link with #reviews"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "moment",
+      "name": "Moment",
+      "settings": [
+        {
+          "type": "text",
+          "id": "when",
+          "label": "When",
+          "default": "DAY 1"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Text</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "VX · Timeline",
+      "blocks": [
+        {
+          "type": "moment",
+          "settings": {
+            "when": "DAY 1",
+            "title": "It feels like a spa night.",
+            "text": "<p>Warm, tingly legs. That \"just had a massage\" feeling.</p>"
+          }
+        },
+        {
+          "type": "moment",
+          "settings": {
+            "when": "WEEK 1",
+            "title": "It's part of your evening.",
+            "text": "<p>10 minutes during your show. Legs feel lighter after long sitting days.</p>"
+          }
+        },
+        {
+          "type": "moment",
+          "settings": {
+            "when": "WEEKS 2–4",
+            "title": "Your skin feels different.",
+            "text": "<p>Smoother under your fingers. You start looking on purpose.</p>"
+          }
+        },
+        {
+          "type": "moment",
+          "settings": {
+            "when": "DAY 30+",
+            "title": "No more outfit math.",
+            "text": "<p>You pick what you want to wear. Not what hides.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

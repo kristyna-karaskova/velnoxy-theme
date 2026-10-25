@@ -1,0 +1,346 @@
+<section
+  id="{% if section.settings.anchor != blank %}{{ section.settings.anchor | handleize }}{% else %}vx-{{ section.id }}{% endif %}"
+  class="vx-section vx-section--card-grid color-{{ section.settings.color_scheme }} gradient"
+  style="--vx-pt: {{ section.settings.padding_top }}px; --vx-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="vx-wrap">
+    {% render 'vx-heading', s: section.settings %}
+    <div class="vx-grid vx-grid--{{ section.settings.columns }} vx-cards vx-cards--{{ section.settings.card_style }}">
+      {%- for block in section.blocks -%}
+        <div class="vx-card" {{ block.shopify_attributes }}>
+          {%- case section.settings.card_style -%}
+            {%- when 'cross' -%}
+              <span class="vx-mark vx-mark--no">{% render 'vx-icon', icon: 'cross', icon_size: 14 %}</span>
+            {%- when 'check' -%}
+              <span class="vx-mark vx-mark--yes">{% render 'vx-icon', icon: 'check', icon_size: 14 %}</span>
+            {%- when 'number' -%}
+              <span class="vx-num">{{ forloop.index }}</span>
+            {%- when 'icon' -%}
+              <span class="vx-card__icon">{% render 'vx-icon', icon: block.settings.icon, icon_size: 26 %}</span>
+          {%- endcase -%}
+          <div class="vx-card__text">
+            {%- if block.settings.title != blank -%}<h3 class="vx-card__title">{{ block.settings.title }}</h3>{%- endif -%}
+            {%- if block.settings.text != blank -%}<div class="vx-card__body rte">{{ block.settings.text }}</div>{%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.callout_text != blank or section.settings.callout_highlight != blank -%}
+      <div class="vx-callout">
+        {%- if section.settings.callout_text != blank -%}<div class="vx-callout__text rte">{{ section.settings.callout_text }}</div>{%- endif -%}
+        {%- if section.settings.callout_highlight != blank -%}<p class="vx-callout__hl">{{ section.settings.callout_highlight }}</p>{%- endif -%}
+      </div>
+    {%- endif -%}
+    {%- if section.settings.button_label != blank -%}
+      <div class="vx-actions vx-actions--{{ section.settings.heading_align }}">
+        <a href="{{ section.settings.button_link | default: '#' }}" class="vx-link-arrow">{{ section.settings.button_label }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VX · Card grid",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic words are shown in teal.",
+      "default": "You've already tried the \"fixes.\""
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro text",
+      "default": "<p>You eat well. You move. You've spent real money. Here's how that usually goes:</p>"
+    },
+    {
+      "type": "select",
+      "id": "heading_align",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "select",
+      "id": "card_style",
+      "label": "Card marker",
+      "options": [
+        {
+          "value": "cross",
+          "label": "Red cross (failed solutions)"
+        },
+        {
+          "value": "check",
+          "label": "Teal check"
+        },
+        {
+          "value": "number",
+          "label": "Number"
+        },
+        {
+          "value": "icon",
+          "label": "Icon (per card)"
+        },
+        {
+          "value": "none",
+          "label": "None"
+        }
+      ],
+      "default": "cross"
+    },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Columns on desktop",
+      "options": [
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "header",
+      "content": "Callout below cards (optional)"
+    },
+    {
+      "type": "richtext",
+      "id": "callout_text",
+      "label": "Callout text"
+    },
+    {
+      "type": "text",
+      "id": "callout_highlight",
+      "label": "Callout highlight"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Link label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Anchor id (for #links)",
+      "info": "e.g. reviews → link with #reviews"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon (only for 'Icon' style)",
+          "options": [
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "cross",
+              "label": "Cross"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "shipping",
+              "label": "Truck"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "return",
+              "label": "Return"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "bolt",
+              "label": "Bolt"
+            },
+            {
+              "value": "sofa",
+              "label": "Couch"
+            },
+            {
+              "value": "drop",
+              "label": "Drop"
+            },
+            {
+              "value": "hand",
+              "label": "Hand"
+            },
+            {
+              "value": "mail",
+              "label": "Mail"
+            },
+            {
+              "value": "chat",
+              "label": "Chat"
+            },
+            {
+              "value": "box",
+              "label": "Box"
+            }
+          ],
+          "default": "check"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Card title"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Short supporting text.</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "VX · Card grid",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "title": "Cellulite creams",
+            "text": "<p>Used the whole jar. Rubbed it in every night. Nothing changed.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Coffee scrubs",
+            "text": "<p>Smooth for 20 minutes. Coffee grounds in the drain forever.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Dry brushing",
+            "text": "<p>Every morning for months. Red skin, sore wrist, same dimples.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Cupping",
+            "text": "<p>Bruises for two weeks. You swore never again.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "More squats. More cardio.",
+            "text": "<p>Your legs got stronger. Your skin didn't get the memo.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Spa lymphatic massage",
+            "text": "<p>$80–120 a session. Feels amazing. Then you sit at your desk for 9 hours again.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

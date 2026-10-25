@@ -1,0 +1,51 @@
+{
+  "sections": {
+    "main": {
+      "type": "vx-track",
+      "settings": {
+        "heading": "Where's my Velnoxy?",
+        "intro": "<p>Enter your order number and email. You'll find both in your order confirmation email.</p>",
+        "tracking_url": "/apps/parcelpanel",
+        "param_order": "order",
+        "param_email": "email",
+        "label_order": "Order number",
+        "label_email": "Email",
+        "button": "Track my order",
+        "color_scheme": "scheme-3",
+        "padding_top": 64,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "info_1": {
+          "type": "info",
+          "settings": {
+            "title": "When does it ship?",
+            "text": "<p>Orders ship within 24 hours. Delivery usually takes [X–Y] business days.</p>"
+          }
+        },
+        "info_2": {
+          "type": "info",
+          "settings": {
+            "title": "No tracking update?",
+            "text": "<p>Tracking can take 24–48 hours to show the first scan. That's normal.</p>"
+          }
+        },
+        "info_3": {
+          "type": "info",
+          "settings": {
+            "title": "Something's wrong?",
+            "text": "<p>Write to us with your order number and we'll sort it out. <a href=\"/pages/contact\">Contact support →</a></p>"
+          }
+        }
+      },
+      "block_order": [
+        "info_1",
+        "info_2",
+        "info_3"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

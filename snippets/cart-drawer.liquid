@@ -1,0 +1,543 @@
+{% comment %}
+  Velnoxy cart drawer (Dawn fork).
+  Adds: item count in heading, reservation timer, goal progress bar (checkpoints),
+  compare-at + "You save" per line, bundle labels instead of raw variant titles,
+  gift / discount badges, total savings row, trust row and payment icons.
+  All options live in Theme settings → "Velnoxy · Cart drawer".
+
+  Dawn's cart.js keeps working because the ids / classes it relies on are unchanged:
+  #CartDrawer-Item-N, #Drawer-quantity-N, cart-remove-button[data-index],
+  #CartDrawer-LineItemError-N, .loading__spinner, cart-drawer-items, .cart-drawer__footer.
+
+  Usage:
+  {% render 'cart-drawer' %}
+{% endcomment %}
+
+{{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'vx-cart-drawer.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
+
+<style>
+  .drawer {
+    visibility: hidden;
+  }
+</style>
+
+{%- liquid
+  # ---------- variant labels: "1: Device Only" per line ----------
+  assign label_lines = settings.vx_cart_variant_labels | newline_to_br | split: '<br />'
+
+  # ---------- savings ----------
+  assign total_savings = 0
+  for item in cart.items
+    assign unit_ref = item.original_price
+    if item.variant.compare_at_price > unit_ref
+      assign unit_ref = item.variant.compare_at_price
+    endif
+    assign line_ref = unit_ref | times: item.quantity
+    if line_ref > item.final_line_price
+      assign line_saving = line_ref | minus: item.final_line_price
+      assign total_savings = total_savings | plus: line_saving
+    endif
+  endfor
+
+  # ---------- goals (amounts are entered in store currency, major units) ----------
+  assign goal_1 = settings.vx_cart_goal_1_amount | default: 0 | times: 100
+  assign goal_2 = settings.vx_cart_goal_2_amount | default: 0 | times: 100
+  assign goal_count = 0
+  if settings.vx_cart_goal_1_enable and goal_1 > 0
+    assign goal_count = goal_count | plus: 1
+  endif
+  if settings.vx_cart_goal_2_enable and goal_2 > 0
+    assign goal_count = goal_count | plus: 1
+  endif
+  assign goal_max = goal_1
+  if settings.vx_cart_goal_2_enable and goal_2 > goal_max
+    assign goal_max = goal_2
+  endif
+  assign progress_total = cart.total_price
+  assign next_goal_amount = 0
+  assign next_goal_label = ''
+  if settings.vx_cart_goal_1_enable and goal_1 > progress_total
+    assign next_goal_amount = goal_1 | minus: progress_total
+    assign next_goal_label = settings.vx_cart_goal_1_label
+  elsif settings.vx_cart_goal_2_enable and goal_2 > progress_total
+    assign next_goal_amount = goal_2 | minus: progress_total
+    assign next_goal_label = settings.vx_cart_goal_2_label
+  endif
+  assign progress_pct = 100
+  if goal_max > 0 and progress_total < goal_max
+    assign progress_pct = progress_total | times: 100.0 | divided_by: goal_max
+  endif
+-%}
+
+<cart-drawer class="drawer vx-cart{% if cart == empty %} is-empty{% endif %}">
+  <div id="CartDrawer" class="cart-drawer">
+    <div id="CartDrawer-Overlay" class="cart-drawer__overlay"></div>
+    <div
+      class="drawer__inner gradient color-{{ settings.cart_color_scheme }}"
+      role="dialog"
+      aria-modal="true"
+      aria-label="{{ 'sections.cart.title' | t }}"
+      tabindex="-1"
+    >
+      {%- if cart == empty -%}
+        <div class="drawer__inner-empty">
+          <div class="cart-drawer__warnings center{% if settings.cart_drawer_collection != blank %} cart-drawer__warnings--has-collection{% endif %}">
+            <div class="cart-drawer__empty-content">
+              <h2 class="cart__empty-text">{{ 'sections.cart.empty' | t }}</h2>
+              <button
+                class="drawer__close"
+                type="button"
+                onclick="this.closest('cart-drawer').close()"
+                aria-label="{{ 'accessibility.close' | t }}"
+              >
+                <span class="svg-wrapper">
+                  {{- 'icon-close.svg' | inline_asset_content -}}
+                </span>
+              </button>
+              {%- liquid
+                assign continue_url = routes.all_products_collection_url
+                if settings.vx_cart_empty_product != blank
+                  assign continue_url = settings.vx_cart_empty_product.url
+                endif
+              -%}
+              <a href="{{ continue_url }}" class="button">
+                {{ 'general.continue_shopping' | t }}
+              </a>
+            </div>
+          </div>
+          {%- if settings.cart_drawer_collection != blank -%}
+            <div class="cart-drawer__collection">
+              {% render 'card-collection', card_collection: settings.cart_drawer_collection, columns: 1 %}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div class="drawer__header">
+        <h2 class="drawer__heading">
+          {{ settings.vx_cart_heading | default: 'Cart' }}
+          {%- if settings.vx_cart_heading_count %}
+            <span class="vx-cart__dot" aria-hidden="true">•</span>
+            <span data-vx-cart-count>{{ cart.item_count }}</span>
+            {{ cart.item_count | pluralize: 'item', 'items' -}}
+          {%- endif -%}
+        </h2>
+        <button
+          class="drawer__close"
+          type="button"
+          onclick="this.closest('cart-drawer').close()"
+          aria-label="{{ 'accessibility.close' | t }}"
+        >
+          <span class="svg-wrapper">
+            {{- 'icon-close.svg' | inline_asset_content -}}
+          </span>
+        </button>
+      </div>
+
+      <cart-drawer-items
+        view-event-payload="{{ cart | standard_event_data: 'view', context: 'dialog' | escape }}"
+        view-event-trigger="manual"
+        {% if cart == empty %}
+          class=" is-empty"
+        {% endif %}
+      >
+        {%- if cart != empty -%}
+          <div class="vx-cart__top">
+            {%- if settings.vx_cart_timer_enable -%}
+              <vx-cart-timer
+                class="vx-cart__timer"
+                data-minutes="{{ settings.vx_cart_timer_minutes }}"
+                data-expire="{{ settings.vx_cart_timer_expire }}"
+                style="--vx-timer-bg: {{ settings.vx_cart_timer_bg }}; --vx-timer-fg: {{ settings.vx_cart_timer_fg }};"
+              >
+                {%- assign timer_parts = settings.vx_cart_timer_text | split: '[timer]' -%}
+                <p class="vx-cart__timer-live">
+                  {{ timer_parts[0] -}}
+                  <strong class="vx-cart__timer-clock" data-vx-timer-clock>
+                    {{- settings.vx_cart_timer_minutes | prepend: '0' | slice: -2, 2 -}}:00
+                  </strong>
+                  {{- timer_parts[1] }}
+                </p>
+                <p class="vx-cart__timer-expired" hidden>{{ settings.vx_cart_timer_expired_text }}</p>
+              </vx-cart-timer>
+            {%- endif -%}
+
+            {%- if settings.vx_cart_progress_enable and goal_count > 0 -%}
+              <div class="vx-cart__progress" role="status">
+                <p class="vx-cart__progress-text">
+                  {%- if next_goal_amount > 0 -%}
+                    {%- assign amount_html = next_goal_amount | money | prepend: '<strong>' | append: '</strong>' -%}
+                    {%- assign goal_html = next_goal_label | upcase | prepend: '<strong>' | append: '</strong>' -%}
+                    {{ settings.vx_cart_progress_text | replace: '[amount]', amount_html | replace: '[goal]', goal_html }}
+                  {%- else -%}
+                    {{ settings.vx_cart_progress_done }}
+                  {%- endif -%}
+                </p>
+                <div class="vx-cart__bar">
+                  <div class="vx-cart__bar-fill" style="width: {{ progress_pct | round: 1 }}%;"></div>
+                  {%- if settings.vx_cart_goal_1_enable and goal_1 > 0 -%}
+                    {%- assign pos_1 = goal_1 | times: 100.0 | divided_by: goal_max -%}
+                    <div
+                      class="vx-cart__goal{% if progress_total >= goal_1 %} is-reached{% endif %}"
+                      style="--pos: {{ pos_1 | round: 2 }}%;"
+                    >
+                      <span class="vx-cart__goal-icon">{% render 'vx-icon', icon: settings.vx_cart_goal_1_icon %}</span>
+                      <span class="vx-cart__goal-label">{{ settings.vx_cart_goal_1_label }}</span>
+                    </div>
+                  {%- endif -%}
+                  {%- if settings.vx_cart_goal_2_enable and goal_2 > 0 -%}
+                    {%- assign pos_2 = goal_2 | times: 100.0 | divided_by: goal_max -%}
+                    <div
+                      class="vx-cart__goal{% if progress_total >= goal_2 %} is-reached{% endif %}"
+                      style="--pos: {{ pos_2 | round: 2 }}%;"
+                    >
+                      <span class="vx-cart__goal-icon">{% render 'vx-icon', icon: settings.vx_cart_goal_2_icon %}</span>
+                      <span class="vx-cart__goal-label">{{ settings.vx_cart_goal_2_label }}</span>
+                    </div>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        <form
+          action="{{ routes.cart_url }}"
+          id="CartDrawer-Form"
+          class="cart__contents cart-drawer__form"
+          method="post"
+        >
+          <div id="CartDrawer-CartItems" class="drawer__contents js-contents">
+            {%- if cart != empty -%}
+              <div class="drawer__cart-items-wrapper">
+                <ul class="vx-cart__items list-unstyled" role="list">
+                  {%- for item in cart.items -%}
+                    {%- liquid
+                      assign unit_ref = item.original_price
+                      if item.variant.compare_at_price > unit_ref
+                        assign unit_ref = item.variant.compare_at_price
+                      endif
+                      assign line_ref = unit_ref | times: item.quantity
+                      assign line_saving = 0
+                      if line_ref > item.final_line_price
+                        assign line_saving = line_ref | minus: item.final_line_price
+                      endif
+
+                      assign variant_label = ''
+                      unless item.product.has_only_default_variant
+                        for line in label_lines
+                          assign pair = line | split: ':'
+                          assign key = pair[0] | strip
+                          if key == item.variant.title
+                            assign variant_label = pair | slice: 1, 9 | join: ':' | strip
+                            break
+                          endif
+                        endfor
+                        if variant_label == blank and settings.vx_cart_show_raw_variant
+                          assign variant_label = item.variant.title
+                        endif
+                      endunless
+
+                      assign has_qty_rules = false
+                      if item.variant.quantity_rule.increment > 1 or item.variant.quantity_rule.min > 1 or item.variant.quantity_rule.max != null
+                        assign has_qty_rules = true
+                      endif
+                      assign can_edit_qty = true
+                      if item.instructions and item.instructions.can_update_quantity == false
+                        assign can_edit_qty = false
+                      endif
+                    -%}
+                    <li
+                      id="CartDrawer-Item-{{ item.index | plus: 1 }}"
+                      class="cart-item vx-ci{% if item.parent_relationship.parent != null %} cart-item__nested-line{% endif %}{% if item.final_line_price == 0 %} vx-ci--free{% endif %}"
+                    >
+                      <div class="vx-ci__media">
+                        {%- if item.image -%}
+                          <img
+                            class="cart-item__image"
+                            src="{{ item.image | image_url: width: 240 }}"
+                            alt="{{ item.image.alt | escape }}"
+                            loading="lazy"
+                            width="120"
+                            height="{{ 120 | divided_by: item.image.aspect_ratio | ceil }}"
+                          >
+                        {%- endif -%}
+                      </div>
+
+                      <div class="vx-ci__body">
+                        <div class="vx-ci__top">
+                          <div class="cart-item__details">
+                            <a href="{{ item.url }}" class="cart-item__name break">
+                              {{- item.product.title | escape -}}
+                            </a>
+                            {%- if variant_label != blank -%}
+                              <p class="vx-ci__variant">{{ variant_label }}</p>
+                            {%- endif -%}
+
+                            {%- for property in item.properties -%}
+                              {%- assign property_first_char = property.first | slice: 0 -%}
+                              {%- if property.last != blank and property_first_char != '_' -%}
+                                <p class="vx-ci__variant">{{ property.first }}: {{ property.last }}</p>
+                              {%- endif -%}
+                            {%- endfor -%}
+
+                            {%- if item.selling_plan_allocation != null -%}
+                              <p class="vx-ci__variant">{{ item.selling_plan_allocation.selling_plan.name }}</p>
+                            {%- endif -%}
+
+                            {%- if item.final_line_price == 0 or item.line_level_discount_allocations.size > 0 -%}
+                              <div class="vx-ci__unit">
+                                {%- if line_saving > 0 -%}
+                                  <s>{{ unit_ref | money }}</s>
+                                {%- endif -%}
+                                <strong>{{ item.final_price | money }}</strong>
+                                {%- for discount in item.line_level_discount_allocations -%}
+                                  <span class="vx-ci__badge">
+                                    {{- 'icon-discount.svg' | inline_asset_content -}}
+                                    {{ discount.discount_application.title | escape }}
+                                  </span>
+                                {%- endfor -%}
+                              </div>
+                            {%- endif -%}
+                          </div>
+
+                          <cart-remove-button
+                            id="CartDrawer-Remove-{{ item.index | plus: 1 }}"
+                            data-index="{{ item.index | plus: 1 }}"
+                          >
+                            <button
+                              type="button"
+                              class="button button--tertiary cart-remove-button vx-ci__remove"
+                              aria-label="{{ 'sections.cart.remove_title' | t: title: item.title | escape }}"
+                              data-variant-id="{{ item.variant.id }}"
+                              {% if item.instructions and item.instructions.can_remove == false %}
+                                hidden
+                              {% endif %}
+                            >
+                              <span class="svg-wrapper">
+                                {{- 'icon-remove.svg' | inline_asset_content -}}
+                              </span>
+                            </button>
+                          </cart-remove-button>
+                        </div>
+
+                        <div class="vx-ci__bottom">
+                          <div class="cart-item__quantity">
+                            <quantity-popover>
+                              <div class="cart-item__quantity-wrapper quantity-popover-wrapper">
+                                <div class="quantity-popover-container">
+                                  <quantity-input class="quantity cart-quantity vx-qty">
+                                    <button
+                                      class="quantity__button"
+                                      name="minus"
+                                      type="button"
+                                      {% unless can_edit_qty %}
+                                        disabled
+                                      {% endunless %}
+                                    >
+                                      <span class="visually-hidden">
+                                        {{- 'products.product.quantity.decrease' | t: product: item.product.title | escape -}}
+                                      </span>
+                                      <span class="svg-wrapper">
+                                        {{- 'icon-minus.svg' | inline_asset_content -}}
+                                      </span>
+                                    </button>
+                                    <input
+                                      class="quantity__input"
+                                      type="number"
+                                      data-quantity-variant-id="{{ item.variant.id }}"
+                                      data-quantity-line-key="{{ item.key }}"
+                                      name="updates[]"
+                                      value="{{ item.quantity }}"
+                                      {% # theme-check-disable %}
+                                      data-cart-quantity="{{ cart | item_count_for_variant: item.variant.id }}"
+                                      min="0"
+                                      data-min="{{ item.variant.quantity_rule.min }}"
+                                      {% if item.variant.quantity_rule.max != null %}
+                                        max="{{ item.variant.quantity_rule.max }}"
+                                      {% endif %}
+                                      step="{{ item.variant.quantity_rule.increment }}"
+                                      {% # theme-check-enable %}
+                                      aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
+                                      id="Drawer-quantity-{{ item.index | plus: 1 }}"
+                                      data-index="{{ item.index | plus: 1 }}"
+                                      {% unless can_edit_qty %}
+                                        disabled
+                                      {% endunless %}
+                                    >
+                                    <button
+                                      class="quantity__button"
+                                      name="plus"
+                                      type="button"
+                                      {% unless can_edit_qty %}
+                                        disabled
+                                      {% endunless %}
+                                    >
+                                      <span class="visually-hidden">
+                                        {{- 'products.product.quantity.increase' | t: product: item.product.title | escape -}}
+                                      </span>
+                                      <span class="svg-wrapper">
+                                        {{- 'icon-plus.svg' | inline_asset_content -}}
+                                      </span>
+                                    </button>
+                                  </quantity-input>
+                                </div>
+                              </div>
+                              {%- if has_qty_rules -%}
+                                <p class="vx-ci__rules caption">
+                                  {%- if item.variant.quantity_rule.min > 1 -%}
+                                    {{ 'products.product.quantity.min_of' | t: quantity: item.variant.quantity_rule.min }}
+                                  {%- endif -%}
+                                  {%- if item.variant.quantity_rule.max != null %}
+                                    {{ 'products.product.quantity.max_of' | t: quantity: item.variant.quantity_rule.max }}
+                                  {%- endif -%}
+                                </p>
+                              {%- endif -%}
+                              <div
+                                id="CartDrawer-LineItemError-{{ item.index | plus: 1 }}"
+                                class="cart-item__error"
+                                role="alert"
+                              >
+                                <small class="cart-item__error-text"></small>
+                                <span class="svg-wrapper">
+                                  {{- 'icon-error.svg' | inline_asset_content -}}
+                                </span>
+                              </div>
+                            </quantity-popover>
+                          </div>
+
+                          <div class="cart-item__totals vx-ci__totals">
+                            {%- render 'loading-spinner' -%}
+                            <div class="cart-item__price-wrapper">
+                              {%- if line_saving > 0 -%}
+                                <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+                                <s class="vx-ci__old">{{ line_ref | money }}</s>
+                                <span class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</span>
+                              {%- endif -%}
+                              <span class="vx-ci__price">{{ item.final_line_price | money }}</span>
+                            </div>
+                            {%- if line_saving > 0 and settings.vx_cart_line_savings -%}
+                              {%- assign line_saving_money = line_saving | money -%}
+                              <span class="vx-ci__save">
+                                {{- settings.vx_cart_line_savings_text | replace: '[amount]', line_saving_money -}}
+                              </span>
+                            {%- endif -%}
+                            {%- if item.variant.available and item.unit_price_measurement -%}
+                              {% render 'unit-price', price: item.unit_price, measurement: item.unit_price_measurement %}
+                            {%- endif -%}
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endif -%}
+            <p id="CartDrawer-LiveRegionText" class="visually-hidden" role="status"></p>
+            <p id="CartDrawer-LineItemStatus" class="visually-hidden" aria-hidden="true" role="status">
+              {{ 'accessibility.loading' | t }}
+            </p>
+          </div>
+          <div id="CartDrawer-CartErrors" role="alert"></div>
+        </form>
+      </cart-drawer-items>
+
+      <div class="drawer__footer">
+        {%- if settings.show_cart_note -%}
+          <details id="Details-CartDrawer">
+            <summary>
+              <span class="summary__title">
+                {{ 'sections.cart.note' | t }}
+                {{- 'icon-caret.svg' | inline_asset_content -}}
+              </span>
+            </summary>
+            <cart-note class="cart__note field">
+              <label class="visually-hidden" for="CartDrawer-Note">{{ 'sections.cart.note' | t }}</label>
+              <textarea
+                id="CartDrawer-Note"
+                class="text-area text-area--resize-vertical field__input"
+                name="note"
+                placeholder="{{ 'sections.cart.note' | t }}"
+              >{{ cart.note }}</textarea>
+            </cart-note>
+          </details>
+        {%- endif -%}
+
+        <div class="cart-drawer__footer">
+          {%- if settings.vx_cart_trust_enable -%}
+            <div class="vx-cart__trust">
+              <div class="vx-cart__trust-item">
+                {% render 'vx-icon', icon: 'shield' %}
+                <span
+                  ><strong>{{ settings.vx_cart_trust_1_title }}</strong
+                  ><small>{{ settings.vx_cart_trust_1_text }}</small></span
+                >
+              </div>
+              <span class="vx-cart__trust-sep" aria-hidden="true"></span>
+              <div class="vx-cart__trust-item">
+                {% render 'vx-icon', icon: 'lock' %}
+                <span
+                  ><strong>{{ settings.vx_cart_trust_2_title }}</strong
+                  ><small>{{ settings.vx_cart_trust_2_text }}</small></span
+                >
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if cart.cart_level_discount_applications.size > 0 -%}
+            <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
+              {%- for discount in cart.cart_level_discount_applications -%}
+                <li class="discounts__discount discounts__discount--end">
+                  {{- 'icon-discount.svg' | inline_asset_content -}}
+                  {{ discount.title | escape }}
+                  (-{{ discount.total_allocated_amount | money }})
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+
+          <div class="vx-cart__totals" role="status">
+            {%- if settings.vx_cart_total_savings and total_savings > 0 -%}
+              <p class="vx-cart__row vx-cart__row--savings">
+                <span>{{ settings.vx_cart_savings_label }}</span>
+                <span>-{{ total_savings | money }}</span>
+              </p>
+            {%- endif -%}
+            <p class="vx-cart__row vx-cart__row--subtotal">
+              <span>{{ settings.vx_cart_subtotal_label | default: 'Subtotal' }}</span>
+              <span>{{ cart.total_price | money }}</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="cart__ctas">
+          <button
+            type="submit"
+            id="CartDrawer-Checkout"
+            class="cart__checkout-button button vx-cart__checkout"
+            name="checkout"
+            form="CartDrawer-Form"
+            {% if cart == empty %}
+              disabled
+            {% endif %}
+          >
+            {{ settings.vx_cart_checkout_label | default: 'Check out' }}
+          </button>
+        </div>
+
+        {%- if settings.vx_cart_payment_icons -%}
+          <ul class="vx-cart__payments list-unstyled" role="list">
+            {%- for type in shop.enabled_payment_types -%}
+              <li>{{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}</li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</cart-drawer>
